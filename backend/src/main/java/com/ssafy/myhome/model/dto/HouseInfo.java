@@ -1,29 +1,18 @@
 package com.ssafy.myhome.model.dto;
 
-import java.util.List;
-
 import lombok.Getter;
 import lombok.Setter;
 
-//@Data
-//@ToString
-//@AllArgsConstructor
 @Getter
 @Setter
-public class HouseInfo {
+public class HouseInfo extends DongCode {
 	
-	int aptCode;
-	String aptName;
-	String sidoName;
-	String gugunName;
-	String dongName;
-	String dongCode;
-	String buildYear;
-	String jibun;
-	String lat;
-	String lng;
-	
-	List<HouseDeal> houseDeals;
-	
+	private int houseinfoId;
+	private String aptName;
+	private int buildYear;
+	private String jibun;
+	private String lat;
+	private String lng;
+	private String img;
 	
 }

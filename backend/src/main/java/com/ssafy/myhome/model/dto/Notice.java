@@ -1,18 +1,16 @@
 package com.ssafy.myhome.model.dto;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
-@ToString
-@Setter
 @Getter
-public class Notice {
-	
+@Setter
+public class Notice extends BasePostForm {
+
 	private int noticeId;
-	private String title;
-	private String content;
-	private String dateTime;
-	private int hit;
+	
+	private List<FileInfo> fileInfo;
 	
 }

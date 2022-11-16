@@ -1,21 +1,21 @@
 package com.ssafy.myhome.model.dto;
 
-import lombok.Data;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@ToString
+@Getter
+@Setter
 public class HouseDeal {
-
-	int no;
-	int aptCode;
-	String dealAmount;
-	int dealYear;
-	int dealMonth;
-	int dealDay;
-	String area;
-	String floor;
-	String type;
-	String rentMoney;
 	
+	private int housedealId;
+	private int aptCode;
+	private String dealAmount;
+	private int dealYear;
+	private int dealMonth;
+	private int dealDay;
+	private String area;
+	private String floor;
+	private String type;
+	private String rentMoney;
+
 }

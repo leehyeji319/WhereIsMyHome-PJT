@@ -3,14 +3,13 @@ package com.ssafy.myhome.model.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
-public class InterestArea {
+@Setter
+public class DongCode {
 
-	private String userid;
 	private String dongCode;
-	private int isMain;
-	
-	private BaseAddress baseAddress;
+	private String sidoName;
+	private String gugunName;
+	private String dongName;
 	
 }
