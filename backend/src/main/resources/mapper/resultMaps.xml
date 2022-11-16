@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.resultmaps">
+	
+<!-- 	<resultMap type="Emp" id="EmpResultMapWithDept" extends="EmpResultMap"> type은 필수 지정!! -->
+<!-- 		<association property="dept" resultMap="com.ssafy.empapp.model.dao.DeptDAO.DeptResultMap"></association>  -->
+<!-- 	</resultMap> -->
+	
+	<resultMap type="Notice" id="NoticeResultMap">
+		<id column="noticeid" property="noticeId"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="date_time" property="dateTime"/>
+		<result column="hit" property="hit"/>
+	</resultMap>
+
+</mapper>
