@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.ssafy.myhome.model.dao.HouseInfoDao">
+	
+	<sql id="basicSelectHouseSQL">
+		select houseinfo_id, aptName, dongCode, dongName, buildYear, jibun, lat, lng
+		from houseinfo
+	</sql>
+	
+	<!-- basic get House List -->
+	<sql id="basicSelectHouseListSQL">
+		select 
+		a.houseinfo_id, a.aptName, b.sidoName, b.gugunName, a.dongName, a.dongCode, a.buildYear, a.jibun, a.lat, a.lng
+		from houseinfo as a
+		inner join dongcode as b
+		on a.dongCode = b.dongCode
+	</sql>
+	
+	<!-- basic get House Deal List -->
+	<sql id="basicSelectHouseDealListSQL">
+		select * from housedeal where aptCode = #{house_id} order by dealYear desc, dealMonth desc, dealDay desc;
+	</sql>
+	
+	<!-- basic get House -->
+	<select id="getHouse" parameterType="int" resultType="HouseInfo">
+		<include refid="basicSelectHouseSQL"/>
+		where houseinfo_id = #{houseinfo_id}
+	</select>
+	
+	<!-- House info select box 검색 -->
+	<select id="getHouses" resultMap="com.ssafy.resultmaps.HouseResultMap" parameterType="map">
+		<include refid="basicSelectHouseListSQL"/>
+		<where>
+			<choose>
+				<when test='(sidoCode != "" and sidoCode != null) and (gugunCode == "" or gugurnCode == null)'>
+					a.dongCode like concat(#{value}, '%') 
+				</when>
+				<when test='(gugunCode != "" and gugunCode != null) and (dongCode == "" or dongCode == null)'>
+					a.dongCode like concat(#{value}, '%')
+				</when>
+				<when test='value != null and value != ""'>
+					a.dongCode like #{value}
+				</when>
+			</choose>
+		</where>
+	</select>
+	
+	
+	<select id="getHouseDeals" parameterType="int" resultMap="com.ssafy.resultmaps.HouseInfoDealResultMap">
+		select
+		a.houseinfo_id, a.aptName, a.dongCode, a.dongName, a.buildYear, a.jibun, a.lat, a.lng,
+		b.housedeal_id, b.dealAmount, b.dealYear, b.dealMonth, b.dealDay, b.area, b.floor, b.type, b.rentMoney
+		from houseinfo as a
+		inner join housedeal as b
+		on a.houseinfo_id = b.aptCode
+		where a.houseinfo_id = #{house_id}
+	</select>
+	
+	<!-- house의 매물 목록 -->
+<!-- 	<select id="getHousewithDeals" parameterType="int" resultMap="com.ssafy.resultmaps.HouseInfoDealResultMap"> -->
+<!-- 		<include refid="getHouseDeals"/> -->
+<!-- 	</select> -->
+	
+</mapper>
