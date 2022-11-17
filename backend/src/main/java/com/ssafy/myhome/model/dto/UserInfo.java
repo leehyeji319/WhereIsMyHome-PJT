@@ -13,8 +13,9 @@ public class UserInfo {
 	private String userPhone;
 	private String userNickname;
 	private UserRole userRole;
+	private boolean isDeleted;
 	
 	private CompanyInfo companyInfo;
-	
+	private FileInfo userFileInfo;
 	
 }
