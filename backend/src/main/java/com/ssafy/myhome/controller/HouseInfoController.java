@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.myhome.model.dto.HouseInfo;
 import com.ssafy.myhome.model.service.HouseInfoService;
 
-@RequestMapping("/houses")
+@RequestMapping("/api/houses")
 @RestController
 public class HouseInfoController {
 	
@@ -38,8 +38,8 @@ public class HouseInfoController {
 	}
 	
 	@GetMapping("/{house_id}")
-	private ResponseEntity<HouseInfo> getHouse(@PathVariable("house_id") int aptCode) {
-		HouseInfo houseinfo = houseInfoService.getHouse(aptCode);
+	private ResponseEntity<HouseInfo> getHouse(@PathVariable("house_id") int houseinfoId) {
+		HouseInfo houseinfo = houseInfoService.getHouse(houseinfoId);
 		if (houseinfo != null) {
 			return ResponseEntity.ok(houseinfo);
 		} else {
@@ -48,8 +48,8 @@ public class HouseInfoController {
 	}
 	
 	@GetMapping("/{house_id}/deals")
-	private ResponseEntity<HouseInfo> getHouseDeals(@PathVariable("house_id") int aptCode) {
-		HouseInfo houseInfo = houseInfoService.getHouseDeals(aptCode);
+	private ResponseEntity<HouseInfo> getHouseDeals(@PathVariable("house_id") int houseinfoId) {
+		HouseInfo houseInfo = houseInfoService.getHouseDeals(houseinfoId);
 		if (houseInfo != null) {
 			return ResponseEntity.ok(houseInfo);
 		} else {
