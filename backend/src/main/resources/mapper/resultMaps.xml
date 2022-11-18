@@ -49,7 +49,14 @@
 	<!-- Interest User House Mapping 전략 -->
 	<resultMap type="InterestHouse" id="UserInterestHouseMap">
 		<id column="interest_house_id" property="interestHouseId"/>
-		<result column="user_id" property="userid"/>
+		<result column="user_id" property="userId"/>
 		<result column="houseinfo_id" property="houseInfoId"/>
+	</resultMap>
+	
+	<!-- Interest User Board Mapping 전략 -->
+	<resultMap type="InterestBoard" id="UserInterestBoardMap">
+		<id column="interest_sale_id" property="interestBoardId"/>
+		<result column="user_id" property="usreId"/>
+		<result column="board_id" property="boardId"/>
 	</resultMap>
 </mapper>
