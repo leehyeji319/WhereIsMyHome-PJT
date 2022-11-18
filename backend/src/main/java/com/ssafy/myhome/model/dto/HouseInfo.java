@@ -1,5 +1,7 @@
 package com.ssafy.myhome.model.dto;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class HouseInfo extends DongCode {
 	
-	private int houseinfoId;
+	private int houseInfoId;
 	private String aptName;
 	private int buildYear;
 	private String jibun;
@@ -15,4 +17,5 @@ public class HouseInfo extends DongCode {
 	private String lng;
 	private String img;
 	
+	private List<HouseDeal> houseDeals;
 }

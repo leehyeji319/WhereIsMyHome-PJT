@@ -14,4 +14,36 @@
 		<result column="hit" property="hit"/>
 	</resultMap>
 
+	<!-- HouseInfo Mapping 전략 -->
+	<resultMap type="HouseInfo" id="HouseResultMap">
+		<id column="houseinfo_id" property="houseInfoId"/>
+		<result column="aptName" property="aptName"/>
+		<result column="sidoName" property="sidoName"/>
+		<result column="gugunName" property="gugunName"/>
+		<result column="dongName" property="dongName"/>
+		<result column="dongCode" property="dongCode"/>
+		<result column="buildYear" property="buildYear"/>
+		<result column="jibun" property="jibun"/>
+		<result column="lat" property="lat"/>
+		<result column="lng" property="lng"/>
+	</resultMap> 
+	
+	<resultMap type="HouseInfo" id="HouseInfoDealResultMap" autoMapping="true" extends="HouseResultMap">
+		<collection property="houseDeals" resultMap="HouseDealResultMap"/>
+	</resultMap>
+	
+	
+	<!-- House Deal Mapping 전략 -->
+	<resultMap type="HouseDeal" id="HouseDealResultMap">
+		<id column="housedeal_id" property="housedealId"/>
+		<result column="dealAmount" property="dealAmount"/>
+		<result column="dealYear" property="dealYear"/>
+		<result column="dealMonth" property="dealMonth"/>
+		<result column="dealDay" property="dealDay"/>
+		<result column="area" property="area"/>
+		<result column="floor" property="floor"/>
+		<result column="type" property="type"/>
+		<result column="rentMoney" property="rentMoney"/>
+	</resultMap>
+	
 </mapper>
