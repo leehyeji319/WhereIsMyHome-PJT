@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.myhome.model.dao.InterestHouseDao;
-import com.ssafy.myhome.model.dto.HouseInfo;
 import com.ssafy.myhome.model.dto.InterestHouse;
 
 @Service
@@ -23,6 +22,7 @@ public class InterestHouseServiceImpl implements InterestHouseService {
 	@Override
 	public List<InterestHouse> getUserInterestHouses(String userId) {
 		return interestHouseDao.getUserInterestHouses(userId);
+
 	}
 
 	@Override
