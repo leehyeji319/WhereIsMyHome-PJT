@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.myhome.model.dao.InterestHouseDao;
 import com.ssafy.myhome.model.dto.HouseInfo;
+import com.ssafy.myhome.model.dto.InterestHouse;
 
 @Service
 public class InterestHouseServiceImpl implements InterestHouseService {
@@ -15,13 +16,13 @@ public class InterestHouseServiceImpl implements InterestHouseService {
 	private InterestHouseDao interestHouseDao;
 	
 	@Override
-	public InterestHouseDao getUserInterestHouse(int interestHouseId) {
-		return interestHouseDao.getInterestHouse(interestHouseId);
+	public InterestHouse getUserInterestHouse(int interestHouseId) {
+		return interestHouseDao.getUserInterestHouse(interestHouseId);
 	}
 
 	@Override
-	public List<InterestHouseDao> getUserInterestHouses(String userId) {
-		return interestHouseDao.getInterestHouses(userId);
+	public List<InterestHouse> getUserInterestHouses(String userId) {
+		return interestHouseDao.getUserInterestHouses(userId);
 	}
 
 	@Override
