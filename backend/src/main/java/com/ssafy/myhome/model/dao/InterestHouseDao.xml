@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.ssafy.myhome.model.dao.InterestHouseDao">
+	
+	<sql id="basicSelectUserInterestHouseSQL">
+		select interest_house_id, user_id, houseinfo_id from user_interest_house_mapping
+	</sql>
+	
+	<select id="getUserInterestHouse" resultType="InterestHouse" parameterType="int">
+		<include refid="basicSelectUserInterestHouseSQL"/>
+		where interest_house_id = #{interest_house_id}
+	</select>
+	
+	<select id="getUserInterestHouses" resultMap="UserInterestHouseMap" parameterType="String">
+		<include refid="basicSelectUserInterestHouseSQL"/>
+		where user_id = #{user_id}
+	</select>
+	
+	<insert id="insertUserInterestHouseMapping" parameterType="InterestHouse">
+		insert into user_interest_house_mapping(user_id, houseinfo_id) values(#{user_id}, #{interestHouse.houseinfo.houseinfo_id})
+	</insert>
+	
+	<delete id="deleteUserInterestHouseMapping" parameterType="int">
+		delete from user_interest_house_mapping where interest_house_id = #{interest_house_id}
+	</delete>
+	
+</mapper>

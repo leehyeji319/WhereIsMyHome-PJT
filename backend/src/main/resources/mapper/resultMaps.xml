@@ -46,4 +46,10 @@
 		<result column="rentMoney" property="rentMoney"/>
 	</resultMap>
 	
+	<!-- Interest User House Mapping 전략 -->
+	<resultMap type="InterestHouse" id="UserInterestHouseMap">
+		<id column="interest_house_id" property="interestHouseId"/>
+		<result column="user_id" property="userid"/>
+		<result column="houseinfo_id" property="houseInfoId"/>
+	</resultMap>
 </mapper>

@@ -10,7 +10,7 @@ import lombok.Setter;
 public class MyPageUserInfo extends UserInfo {
 	
 	private List<Board> myBoards;
-	private List<HouseInfo> myInterestBuildings;
-	private List<Board> myInterestBoards;
+	private List<InterestHouse> myInterestHouses;
+	private List<InterestBoard> myInterestBoards;
 
 }

@@ -20,7 +20,7 @@
 	
 	<!-- basic get House Deal List -->
 	<sql id="basicSelectHouseDealListSQL">
-		select * from housedeal where aptCode = #{house_id} order by dealYear desc, dealMonth desc, dealDay desc;
+		select * from housedeal where houseinfo_id = #{house_id} order by dealYear desc, dealMonth desc, dealDay desc;
 	</sql>
 	
 	<!-- basic get House -->
@@ -54,7 +54,7 @@
 		b.housedeal_id, b.dealAmount, b.dealYear, b.dealMonth, b.dealDay, b.area, b.floor, b.type, b.rentMoney
 		from houseinfo as a
 		inner join housedeal as b
-		on a.houseinfo_id = b.aptCode
+		on a.houseinfo_id = b.houseinfo_id
 		where a.houseinfo_id = #{house_id}
 	</select>
 	
