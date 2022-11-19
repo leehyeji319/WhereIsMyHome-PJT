@@ -13,7 +13,7 @@
 		where interest_house_id = #{interest_house_id}
 	</select>
 	
-	<select id="getUserInterestHouses" resultMap="UserInterestHouseMap" parameterType="String">
+	<select id="getUserInterestHouses" resultMap="com.ssafy.resultmaps.UserInterestHouseMap" parameterType="String">
 		<include refid="basicSelectUserInterestHouseSQL"/>
 		where user_id = #{user_id}
 	</select>
@@ -25,5 +25,5 @@
 	<delete id="deleteUserInterestHouseMapping" parameterType="int">
 		delete from user_interest_house_mapping where interest_house_id = #{interest_house_id}
 	</delete>
-	
+
 </mapper>

@@ -36,8 +36,10 @@ public class TransactionConfig {
 	        txMethods.put("register*", txAttribute);
 	        txMethods.put("update*", txAttribute);
 	        txMethods.put("delete*", txAttribute);
+	        txMethods.put("signup", txAttribute);
 	        txMethods.put("get*", txAttribute2);
-	        txMethods.put("login", txAttribute2);
+	        txMethods.put("login", txAttribute);
+	        txMethods.put("logIn", txAttribute);
 	        txAttributeSource.setNameMap(txMethods);
 
 	        return new TransactionInterceptor(transactionManager, txAttributeSource);
