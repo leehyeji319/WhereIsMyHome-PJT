@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class CompanyInfo {
 	
+	private String userId;
 	private String address;
 	private String registrationNumber;
 

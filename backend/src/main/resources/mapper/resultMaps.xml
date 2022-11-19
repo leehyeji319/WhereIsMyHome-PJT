@@ -6,6 +6,15 @@
 <!-- 		<association property="dept" resultMap="com.ssafy.empapp.model.dao.DeptDAO.DeptResultMap"></association>  -->
 <!-- 	</resultMap> -->
 	
+	<resultMap type="UserInfo" id="UserResultMap">
+		<id column="user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+		<result column="user_nickname" property="userName"/>
+		<result column="user_phone" property="userName"/>
+		<result column="address" property="address"/>
+		<result column="registration_number" property="registerationNumber"/>
+	</resultMap>
+	
 	<resultMap type="Notice" id="NoticeResultMap">
 		<id column="noticeid" property="noticeId"/>
 		<result column="title" property="title"/>
