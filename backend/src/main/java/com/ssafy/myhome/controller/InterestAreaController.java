@@ -1,78 +1,103 @@
 package com.ssafy.myhome.controller;
 
+import java.util.HashMap;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.myhome.model.dto.InterestArea;
 import com.ssafy.myhome.model.service.InterestAreaService;
 
-@RequestMapping("/users/{userId}/areas")
+@RequestMapping("/api/users/interests/areas")
 @RestController
 public class InterestAreaController {
 
 	@Autowired
 	private InterestAreaService interestAreaService;
 
-	private Object getinterestAreas(InterestArea interestArea) throws Exception {
+	//리스트 조회
+	@GetMapping
+	private ResponseEntity<?> getInterestAreas(@RequestParam String userId) {
+
+		List<InterestArea> interestAreas = interestAreaService.getInterestAreas(userId);
 		
-		String userId = request.getSession().getAttribute("userid").toString();
-		List<InterestArea> interestAreaList = interestAreaService.selectInterestAreas(userId);
-		
-		return new DataInfoDto("application/json", interestAreaList);
+		if (interestAreas != null) {
+			return ResponseEntity.ok(interestAreas);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 		
 	}
 	
-	@PostMapping
-	private ResponseEntity<?> registerInterestArea() throws Exception {
+	
+//	//관심 지역의 상권 라벨 조회
+//	@GetMa
+//	private ResponseEntity<?> getCommercialLabel(@RequestParam String userId) {
+//		
+//		String dongCode = request.getParameter("dongcode");
+//		
+//		CommercialArea commercialLabel = interestAreaService.getCommercialLabel(dongCode);
+//		
+//		return new DataInfoDto("application/json", dongCommercialLabel);
+//		
+//	}
+	
+	
+	//등록
+	@GetMapping("/{dongCode}")
+	private ResponseEntity<?> registerInterestArea(@RequestParam String userId, @PathVariable String dongCode) {
+	
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("userId", userId);
+		params.put("dongCode", dongCode);
 		
-		String userId = request.getSession().getAttribute("userid").toString();
-		String dongCode = request.getParameter("dongcode");
+		boolean res = interestAreaService.registerInterestArea(params);
 		
-		boolean success = interestAreaService.insertUserInterestAreaMapping(userId, dongCode);
-		request.setAttribute("success", success);
-		
-		return new DataInfoDto("application/json", success);
-		
+		if (res) {
+			return ResponseEntity.ok().build(); 
+		} else {
+			return ResponseEntity.internalServerError().build();
+		}
+
 	}
 
-	private Object updateMainInterestAreas(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	
+	//수정
+	@PatchMapping("/{areaId}")
+	private ResponseEntity<?> updateMainInterestArea(@PathVariable int areaId) {
 		
-		String userId = request.getSession().getAttribute("userid").toString();
-		String dongCode = request.getParameter("dongcode");
+		boolean res = interestAreaService.updateMainInterestArea(areaId);
 		
-		boolean success = interestAreaService.updateUserInteresetAreaMapping(userId, dongCode);
-		request.setAttribute("success", success);
-		
-		return new DataInfoDto("application/json", success);
-		
+		if (res) {
+			return ResponseEntity.ok().build();
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+
 	}
 	
-	private Object deleteInterestArea(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		String userId = request.getSession().getAttribute("userid").toString();
-		String dongCode = request.getParameter("dongcode");
-		
-		boolean success = interestAreaService.deleteUserInterestAreaMapping(userId, dongCode);
-		request.setAttribute("success", success);
-		
-		return new DataInfoDto("application/json", success);
-		
-	}
 	
-	private Object getCommercialLabel(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	//삭제
+	@DeleteMapping("/{areaId}")
+	public ResponseEntity<?> deleteInterestArea(@PathVariable int areaId) {
 		
-		String dongCode = request.getParameter("dongcode");
+		boolean res = interestAreaService.deleteInterestArea(areaId);
 		
-		DongCommercialArea dongCommercialLabel = interestAreaService.getCommercialLabel(dongCode);
-		
-		return new DataInfoDto("application/json", dongCommercialLabel);
+		if (res) {
+			return ResponseEntity.noContent().build();
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 		
 	}
 

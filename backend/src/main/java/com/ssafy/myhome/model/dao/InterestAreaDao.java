@@ -1,21 +1,23 @@
 package com.ssafy.myhome.model.dao;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-import com.ssafy.myhome.model.dto.DongCommercialArea;
+import org.apache.ibatis.annotations.Mapper;
+
 import com.ssafy.myhome.model.dto.InterestArea;
 
+@Mapper
 public interface InterestAreaDao {
+	
+	List<InterestArea> getInterestAreas(String userId);
+	
+	int registerInterestArea(Map<String, String> params);
 
-	int insertUserInterestAreaMapping(String userId, String dongCode) throws SQLException;
-	
-	ArrayList<InterestArea> selectInterestAreas(String userId) throws SQLException;
-	
-	int updateUserInteresetAreaMapping(String userId, String dongCode) throws SQLException;
-	
-	int deleteUserInterestAreaMapping(String userId, String dongCode) throws SQLException;
+	int updateMain1To0InterestArea();
 
-	DongCommercialArea getCommercialLabel(String dongCode) throws SQLException;
-	
+	int updateMain0To1InterestArea(int areaId);
+
+	int deleteInterestArea(int areaId);
+		
 }

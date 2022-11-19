@@ -6,12 +6,79 @@
 <!-- 		<association property="dept" resultMap="com.ssafy.empapp.model.dao.DeptDAO.DeptResultMap"></association>  -->
 <!-- 	</resultMap> -->
 	
+	<!-- Notice -->
 	<resultMap type="Notice" id="NoticeResultMap">
 		<id column="noticeid" property="noticeId"/>
 		<result column="title" property="title"/>
 		<result column="content" property="content"/>
 		<result column="date_time" property="dateTime"/>
 		<result column="hit" property="hit"/>
+	</resultMap>
+	
+	<!-- Label -->
+	<resultMap type="CommercialLabel" id="CommercialLabelResultMap">
+		<id column="label_id" property="labelId"/>
+		<result column="name" property="name"/>
+	</resultMap>
+	
+	<!-- CommercialTypeValue -->
+	<resultMap type="CommercialTypeValue" id="countResultMap">
+		<result column="convenience_store" property="convenienceStore"/>
+		<result column="education" property="education"/>
+		<result column="cafe" property="cafe"/>
+		<result column="restaurant" property="restaurant"/>
+		<result column="health" property="health"/>
+		<result column="market" property="market"/>
+	</resultMap>
+	
+	<resultMap type="CommercialTypeValue" id="avgDiffResultMap">
+		<result column="avg_diff_convenience_store" property="convenienceStore"/>
+		<result column="avg_diff_education" property="education"/>
+		<result column="avg_diff_cafe" property="cafe"/>
+		<result column="avg_diff_restaurant" property="restaurant"/>
+		<result column="avg_diff_health" property="health"/>
+		<result column="avg_diff_market" property="market"/>
+	</resultMap>
+	
+	<resultMap type="CommercialTypeValue" id="totalAvgResultMap">
+		<result column="total_avg_convenience_store" property="convenienceStore"/>
+		<result column="total_avg_education" property="education"/>
+		<result column="total_avg_cafe" property="cafe"/>
+		<result column="total_avg_restaurant" property="restaurant"/>
+		<result column="total_avg_health" property="health"/>
+		<result column="total_avg_market" property="market"/>
+	</resultMap>
+	
+	<!-- CommercialArea -->
+	<resultMap type="CommercialArea" id="CommercialAreaResultMap">
+		<id column="dongCode" property="dongCode"/>
+		<association property="count" resultMap="countResultMap"/>
+		<association property="avgDiff" resultMap="avgDiffResultMap"/>
+		<association property="label" resultMap="CommercialLabelResultMap"/>
+	</resultMap>
+	
+	<!-- DongCode -->
+	<resultMap type="DongCode" id="DongCodeResultMap">
+		<id column="dongCode" property="dongCode"/>
+		<result column="sidoName" property="sidoName"/>
+		<result column="gugunName" property="gugunName"/>
+		<result column="dongName" property="dongName"/>
+		<association property="commercialArea" resultMap="CommercialAreaResultMap"/>
+	</resultMap>
+	
+	<!-- BaseAddress -->
+	<resultMap type="BaseAddress" id="BaseAddressResultMap" extends="DongCodeResultMap">
+		<id column="baseaddress_id" property="baseaddressId"/>
+		<result column="lat" property="lat"/>
+		<result column="lng" property="lng"/>
+	</resultMap>
+
+	<!-- InterestArea -->
+	<resultMap type="InterestArea" id="InterestAreaResultMap">
+		<id column="interest_area_id" property="interestAreaId"/>
+		<result column="is_main" property="isMain"/>
+		<result column="user_id" property="userId"/>
+		<association property="baseAddress" resultMap="BaseAddressResultMap"/>
 	</resultMap>
 
 </mapper>

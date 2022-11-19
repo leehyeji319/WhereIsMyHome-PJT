@@ -1,43 +1,43 @@
-package com.ssafy.myhome.model.service.impl;
+package com.ssafy.myhome.model.service;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.myhome.model.dao.InterestAreaDao;
-import com.ssafy.myhome.model.dao.impl.InterestAreaDaoImpl;
-import com.ssafy.myhome.model.dto.DongCommercialArea;
 import com.ssafy.myhome.model.dto.InterestArea;
-import com.ssafy.myhome.model.service.InterestAreaService;
 
 @Service
 public class InterestAreaServiceImpl implements InterestAreaService {
 	
-	private InterestAreaDao interestAreaDao = InterestAreaDaoImpl.getInstance();
+	@Autowired
+	private InterestAreaDao interestAreaDao;
 
 	@Override
-	public boolean insertUserInterestAreaMapping(String userId, String dongCode) throws Exception {
-		return interestAreaDao.insertUserInterestAreaMapping(userId, dongCode) > 0;
+	public List<InterestArea> getInterestAreas(String userId) {
+		return interestAreaDao.getInterestAreas(userId);
+	}
+	
+	@Override
+	public boolean registerInterestArea(Map<String, String> params) {
+		return interestAreaDao.registerInterestArea(params) > 0;
 	}
 
 	@Override
-	public ArrayList<InterestArea> selectInterestAreas(String userId) throws Exception {
-		return interestAreaDao.selectInterestAreas(userId);
+	@Transactional
+	public boolean updateMainInterestArea(int areaId) {
+		int res1 = interestAreaDao.updateMain1To0InterestArea();
+		int res2 = interestAreaDao.updateMain0To1InterestArea(areaId);
+		
+		return res1 + res2 > 0;
 	}
 
 	@Override
-	public boolean updateUserInteresetAreaMapping(String userId, String dongCode) throws Exception {
-		return interestAreaDao.updateUserInteresetAreaMapping(userId, dongCode) > 0;
-	}
-
-	@Override
-	public boolean deleteUserInterestAreaMapping(String userId, String dongCode) throws Exception {
-		return interestAreaDao.deleteUserInterestAreaMapping(userId, dongCode) > 0;
-	}
-
-	@Override
-	public DongCommercialArea getCommercialLabel(String dongCode) throws Exception {
-		return interestAreaDao.getCommercialLabel(dongCode);
+	public boolean deleteInterestArea(int areaId) {
+		return interestAreaDao.deleteInterestArea(areaId) > 0;
 	}
 
 }
