@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.myhome.model.dao.InterestAreaDao">
+
+	<!-- 조회 -->
+	<select id="getInterestAreas" parameterType="String" resultMap="com.ssafy.resultmaps.InterestAreaResultMap">
+		SELECT ia.interest_area_id, ia.is_main, ia.user_id, 
+				b.baseaddress_id, b.sidoName, b.gugunName, b.dongName, b.dongCode, b.lat, b.lng,
+				ca.dongName, ca.convenience_store, ca.education, ca.cafe, ca.restaurant, ca.health, ca.market,
+				ca.avg_diff_convenience_store, ca.avg_diff_education, ca.avg_diff_cafe, ca.avg_diff_restaurant, ca.avg_diff_health, ca.avg_diff_market,
+				l.label_id, l.name
+		FROM user_interest_area_mapping ia, baseaddress b, dong_commercial_area ca LEFT OUTER JOIN label l ON (ca.label_id = l.label_id)
+		WHERE ia.baseaddress_id = b.baseaddress_id 
+			AND b.dongCode = ca.dongCode
+			AND user_id = #{userId}
+	</select>
+	
+	
+	<!-- 등록 -->
+	<insert id="registerInterestArea" parameterType="Map">
+		INSERT INTO user_interest_area_mapping(user_id, baseaddress_id, is_main) 
+		VALUES(#{userId}, (SELECT baseaddress_id FROM baseaddress WHERE dongCode = #{dongCode}), 0)
+	</insert>
+	
+	
+	<!-- 수정 -->
+	<update id="updateMain1To0InterestArea">
+		UPDATE user_interest_area_mapping 
+		SET is_main = 0
+		WHERE is_main = 1
+	</update>
+	
+	<update id="updateMain0To1InterestArea" parameterType="int">
+		UPDATE user_interest_area_mapping 
+		SET is_main = 1
+		WHERE interest_area_id = #{areaId}
+	</update>
+	
+	
+	<!-- 삭제 -->
+	<delete id="deleteInterestArea" parameterType="int">
+		DELETE FROM user_interest_area_mapping 
+		WHERE interest_area_id = #{areaId}
+	</delete>
+	
+</mapper>

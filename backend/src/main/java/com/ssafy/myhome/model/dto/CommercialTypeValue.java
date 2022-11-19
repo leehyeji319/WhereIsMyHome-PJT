@@ -1,12 +1,17 @@
 package com.ssafy.myhome.model.dto;
 
-public class CommercialTypeValue {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class CommercialTypeValue<T> {
 	
-	double convenience_store;
-    double education;
-    double cafe;
-    double restaurant;
-    double health;
-    double market;
+	private T convenienceStore;
+	private T education;
+	private T cafe;
+	private T restaurant;
+	private T health;
+	private T market;
 
 }
