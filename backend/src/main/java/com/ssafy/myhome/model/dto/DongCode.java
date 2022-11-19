@@ -12,4 +12,6 @@ public class DongCode {
 	private String gugunName;
 	private String dongName;
 	
+	private CommercialArea commercialArea; //상권 정보
+	
 }

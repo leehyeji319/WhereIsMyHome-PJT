@@ -5,18 +5,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CommercialArea extends DongCode {
+public class CommercialArea {
 	
-	private int convenienceStore;
-	private int education;
-	private int cafe;
-	private int restaurant;
-	private int health;
-	private int market;
+	private String dongCode;
 	
-	CommercialTypeValue avgDiff;
-	CommercialTypeValue totalAvg;
-	
+	private CommercialTypeValue<Integer> count;
+	private CommercialTypeValue<Double> avgDiff; //totalAvg(전국의 상점 개수 평균) - count(이 지역의 상점 개수 카운트)
+//	private CommercialTypeValue<Double> totalAvg;
+
 	private CommercialLabel label;
 	
 }
