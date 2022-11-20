@@ -18,4 +18,5 @@ public class UserInfo {
 	private CompanyInfo companyInfo;
 	private FileInfo userFileInfo;
 	
+	
 }
