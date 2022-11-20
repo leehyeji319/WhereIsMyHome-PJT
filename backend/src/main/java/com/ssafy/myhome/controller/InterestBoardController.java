@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.myhome.model.dto.Board;
+import com.ssafy.myhome.model.dto.SaleBoard;
 import com.ssafy.myhome.model.dto.InterestBoard;
 import com.ssafy.myhome.model.service.InterestBoardService;
 
@@ -44,7 +44,7 @@ public class InterestBoardController {
 	
 	@PostMapping
 	private ResponseEntity<?> insertUserInterestBoardMapping(@RequestParam(required = true) String userId,
-			@RequestBody Board board) {
+			@RequestBody SaleBoard board) {
 		
 		boolean res = interestBoardService.insertUserInterestBoardMapping(userId, board);
 		

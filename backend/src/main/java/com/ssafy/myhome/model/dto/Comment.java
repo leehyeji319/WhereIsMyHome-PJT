@@ -9,11 +9,12 @@ public class Comment {
 	
 	private int commentId;
 	private String userId;
+	private String userNickname;
 	private int commentParent;
 	private int boardId;
 	private String content;
 	private String createdAt;
 	private String updatedAt;
-	private boolean isDeleted;
+	private int isDeleted;
 	
 }

@@ -8,21 +8,78 @@
 	
 	<resultMap type="UserInfo" id="UserResultMap">
 		<id column="user_id" property="userId"/>
+		<result column="user_password" property="userPassword"/>
 		<result column="user_name" property="userName"/>
-		<result column="user_nickname" property="userName"/>
-		<result column="user_phone" property="userName"/>
+		<result column="user_phone" property="userPhone"/>
+		<result column="user_nickname" property="userNickname"/>
+		<result column="user_role" property="userRole"/>
+		<result column="is_deleted" property="isDeleted"/>
+		<association property="companyInfo" resultMap="CompanyResultMap" />
+		<collection property="userFileInfo" resultMap="FileInfoResultMap"/>
+	</resultMap>
+	
+	<resultMap type="CompanyInfo" id="CompanyResultMap">
+		<id column="user_id" property="userId"/>
 		<result column="address" property="address"/>
 		<result column="registration_number" property="registerationNumber"/>
 	</resultMap>
 	
-	<!-- Notice -->
-	<resultMap type="Notice" id="NoticeResultMap">
-		<id column="noticeid" property="noticeId"/>
+	
+	<!-- FileInfo -->
+	<resultMap type="FileInfo" id="FileInfoResultMap">
+		<id column="file_id" property="fileId"/> 
+		<result column="saveFolder" property="saveFolder"/>
+		<result column="originalFile" property="originalFile"/>
+		<result column="saveFile" property="saveFile"/>
+	</resultMap>
+	
+	<!-- Comment -->
+	<resultMap type="Comment" id="CommentResultMap">
+		<id column="comment_id" property="commentId"/> 
+		<result column="user_id" property="userId"/>
+		<result column="user_nickname" property="userNickname"/>
+		<result column="comment_parent" property="commentParent"/>
+		<result column="board_id" property="boardId"/>
+		<result column="content" property="content"/>
+		<result column="created_at" property="createdAt"/>
+		<result column="updated_at" property="updatedAt"/>
+		<result column="is_deleted" property="isDeleted"/>
+	</resultMap>
+	
+	<!-- BasePostForm -->
+	<resultMap type="BasePostForm" id="BasePostFormResultMap">
 		<result column="title" property="title"/>
 		<result column="content" property="content"/>
-		<result column="date_time" property="dateTime"/>
 		<result column="hit" property="hit"/>
+		<result column="created_at" property="createdAt"/>
+		<result column="updated_at" property="updatedAt"/>
+		<result column="is_deleted" property="isDeleted"/>
+		<association property="userInfo" resultMap="UserResultMap"/>
 	</resultMap>
+	
+	<!-- Notice -->
+	<resultMap type="Notice" id="NoticeResultMap" extends="BasePostFormResultMap">
+		<id column="noticeid" property="noticeId"/>
+		<collection property="fileInfos" resultMap="FileInfoResultMap"/>
+	</resultMap>
+	
+	<!-- SaleBoard -->
+	<resultMap type="SaleBoard" id="SaleBoardResultMap" extends="BasePostFormResultMap">
+		<id column="board_id" property="boardId"/>
+		<result column="sale_type" property="saleType"/>
+		<result column="sale_price" property="salePrice"/>
+		<result column="building_type" property="buildingType"/>
+		<result column="building_name" property="buildingName"/>
+		<result column="building_address" property="buildingAddress"/>
+		<result column="building_space" property="buildingSpace"/>
+		<result column="building_floor_type" property="buildingFloorType"/>
+		<result column="building_floor" property="buildingFloor"/>
+		<result column="building_room_num" property="buildingRoomNum"/>
+		<result column="comment_cnt" property="commentCnt"/>
+		<collection property="fileInfos" resultMap="FileInfoResultMap"/>
+		<collection property="comments" resultMap="CommentResultMap"/>
+	</resultMap>
+	
 	
 	<!-- Label -->
 	<resultMap type="CommercialLabel" id="CommercialLabelResultMap">
@@ -90,6 +147,7 @@
 		<association property="baseAddress" resultMap="BaseAddressResultMap"/>
 	</resultMap>
 
+
 	<!-- HouseInfo Mapping 전략 -->
 	<resultMap type="HouseInfo" id="HouseResultMap">
 		<id column="houseinfo_id" property="houseInfoId"/>
@@ -107,7 +165,6 @@
 	<resultMap type="HouseInfo" id="HouseInfoDealResultMap" autoMapping="true" extends="HouseResultMap">
 		<collection property="houseDeals" resultMap="HouseDealResultMap"/>
 	</resultMap>
-	
 	
 	<!-- House Deal Mapping 전략 -->
 	<resultMap type="HouseDeal" id="HouseDealResultMap">

@@ -7,12 +7,12 @@
 	<select id="getInterestAreas" parameterType="String" resultMap="com.ssafy.resultmaps.InterestAreaResultMap">
 		SELECT ia.interest_area_id, ia.is_main, ia.user_id, 
 				b.baseaddress_id, b.sidoName, b.gugunName, b.dongName, b.dongCode, b.lat, b.lng,
-				ca.dongName, ca.convenience_store, ca.education, ca.cafe, ca.restaurant, ca.health, ca.market,
-				ca.avg_diff_convenience_store, ca.avg_diff_education, ca.avg_diff_cafe, ca.avg_diff_restaurant, ca.avg_diff_health, ca.avg_diff_market,
+				ci.dongName, ci.convenience_store, ci.education, ci.cafe, ci.restaurant, ci.health, ci.market,
+				ci.avg_diff_convenience_store, ci.avg_diff_education, ci.avg_diff_cafe, ci.avg_diff_restaurant, ci.avg_diff_health, ci.avg_diff_market,
 				l.label_id, l.name
-		FROM user_interest_area_mapping ia, baseaddress b, dong_commercial_area ca LEFT OUTER JOIN label l ON (ca.label_id = l.label_id)
+		FROM user_interest_area_mapping ia, baseaddress b, dong_commercial_info ci LEFT OUTER JOIN label l ON (ca.label_id = l.label_id)
 		WHERE ia.baseaddress_id = b.baseaddress_id 
-			AND b.dongCode = ca.dongCode
+			AND b.dongCode = ci.dongCode
 			AND user_id = #{userId}
 	</select>
 	

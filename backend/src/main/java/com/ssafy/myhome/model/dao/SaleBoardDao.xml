@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.myhome.model.dao.SaleBoardDao">
+	<!-- 조회 -->
+	<select id="getSaleBoard" parameterType="_int" resultMap="com.ssafy.resultmaps.SaleBoardResultMap">
+		SELECT sb.board_id, sb.title, sb.content, sb.hit, sb.created_at, sb.updated_at, sb.is_deleted, 
+				sb.sale_type, sb.sale_price, 
+				sb.building_type, sb.building_name, sb.building_address, sb.building_space, sb.building_floor_type, sb.building_floor, sb.building_room_num,
+				u.user_id, u.user_phone, u.user_nickname, u.user_role,
+				c.address, c.registration_number,
+				uf.file_id, uf.save_folder, uf.original_file, uf.save_file
+		FROM house_sale_board sb, user_info u LEFT OUTER JOIN company_info c ON (u.user_id = c.user_id), user_fileinfo uf
+		WHERE sb.user_id = u.user_id
+			AND sb.board_id = 
+			AND u.user_id = uf.user_id
+			AND u.is_deleted = 0 
+	</select>
+	
+	
+	<!-- 리스트 조회 -->
+	<select id="getSaleBoards" resultMap="com.ssafy.resultmaps.SaleBoardResultMap">
+		SELECT sb.board_id, sb.title, sb.content, sb.hit, sb.created_at, sb.updated_at, sb.is_deleted, 
+				sb.sale_type, sb.sale_price, 
+				sb.building_type, sb.building_name, sb.building_address, sb.building_space, sb.building_floor_type, sb.building_floor, sb.building_room_num,
+				u.user_id, u.user_phone, u.user_nickname, u.user_role,
+				c.address, c.registration_number,
+				uf.file_id, uf.save_folder, uf.original_file, uf.save_file
+		FROM house_sale_board sb, user_info u LEFT OUTER JOIN company_info c ON (u.user_id = c.user_id), user_fileinfo uf
+		WHERE sb.user_id = u.user_id
+			AND sb.board_id = 
+			AND u.user_id = uf.user_id
+			AND u.is_deleted = 0 
+			AND sb.is_deleted = 0
+	</select>
+	
+	
+	<!-- 등록 -->
+	<insert id="registerInterestArea" parameterType="Map">
+		INSERT INTO user_interest_area_mapping(user_id, baseaddress_id, is_main) 
+		VALUES(#{userId}, (SELECT baseaddress_id FROM baseaddress WHERE dongCode = #{dongCode}), 0)
+	</insert>
+	
+	
+	<!-- 수정 -->
+	<update id="updateMain1To0InterestArea">
+		UPDATE user_interest_area_mapping 
+		SET is_main = 0
+		WHERE is_main = 1
+	</update>
+	
+	
+	<!-- 삭제 -->
+	<update id="deleteSaleBoard" parameterType="int">
+		UPDATE house_sale_board 
+		SET is_deleted = 1
+		WHERE board_id = #{boardId}
+	</update>
+</mapper>

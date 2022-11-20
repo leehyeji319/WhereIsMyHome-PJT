@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Board extends BasePostForm {
+public class SaleBoard extends BasePostForm {
 
 	private int boardId;
 	private String saleType;
@@ -15,10 +15,12 @@ public class Board extends BasePostForm {
 	private String buildingType;
 	private String buildingName;
 	private String buildingAddress;
-	private double buildingSpace;
+	private double buildingSpace; //평수
 	private int buildingFloorType; //1 지상, 0 지하
 	private double buildingFloor;
 	private double buildingRoomNum;
+	
+	private int commentCnt; //댓글 개수
 	
 	private List<FileInfo> fileInfos;
 	private List<Comment> comments;

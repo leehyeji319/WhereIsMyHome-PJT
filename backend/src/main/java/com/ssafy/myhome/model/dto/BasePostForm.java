@@ -13,6 +13,6 @@ public class BasePostForm {
 	private String createdAt;
 	private String updatedAt;
 	private UserInfo userInfo;
-	private boolean isDeleted;
+	private int isDeleted;
 	
 }
