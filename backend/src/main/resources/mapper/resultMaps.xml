@@ -7,13 +7,47 @@
 <!-- 	</resultMap> -->
 	
 	<resultMap type="UserInfo" id="UserResultMap">
-		<id column="user_id" property="userId"/>
-		<result column="user_name" property="userName"/>
-		<result column="user_nickname" property="userName"/>
-		<result column="user_phone" property="userName"/>
-		<result column="address" property="address"/>
-		<result column="registration_number" property="registerationNumber"/>
-	</resultMap>
+      <id column="user_id" property="userId"/>
+      <result column="user_password" property="userPassword"/>
+      <result column="user_name" property="userName"/>
+      <result column="user_phone" property="userPhone"/>
+      <result column="user_nickname" property="userNickname"/>
+      <result column="user_nickname" property="userNickname"/>
+      <result column="user_role" property="userRole"/>
+      <association property="companyInfo" resultMap="CompanyResultMap" />
+   </resultMap>
+   
+   <resultMap type="CompanyInfo" id="CompanyResultMap">
+      <id column="user_id" property="userId"/>
+      <result column="address" property="address"/>
+      <result column="registration_number" property="registerationNumber"/>
+   </resultMap>
+   
+   <!-- Sale Board -->
+   <resultMap type="Board" id="BoardResultMap">
+   		<id column="board_id" property="boardId"/>
+   		<result column="user_id" property="userId"/>
+   		<result column="title" property="title"/>
+   		<result column="content" property="content"/>
+   		<result column="building_address" property="buildingAddress"/>
+   		<result column="building_floor" property="buildingFloor"/>
+   		<result column="building_floor_type" property="buildingFloorType"/>
+   		<result column="building_name" property="buildingName"/>
+   		<result column="building_room_num" property="buildingRoomNum"/>
+   		<result column="building_space" property="buildingSpace"/>
+   		<result column="building_address" property="buildingAddress"/>
+   		<result column="created_at" property="createdAt"/>
+   		<result column="updated_at" property="updatedAt"/>
+   		<result column="hit" property="hit"/>
+   		<result column="sale_price" property="salePrice"/>
+   		<result column="sale_type" property="saleType"/>
+   </resultMap>
+   
+   <!-- MyPage -->
+   <resultMap type="MyPageUserInfo" id="MyPageUserInfoResultMap" autoMapping="true" extends="UserResultMap">
+   		<collection property="userBoard" resultMap="BoardResultMap"/>
+   </resultMap>
+   
 	
 	<!-- Notice -->
 	<resultMap type="Notice" id="NoticeResultMap">
