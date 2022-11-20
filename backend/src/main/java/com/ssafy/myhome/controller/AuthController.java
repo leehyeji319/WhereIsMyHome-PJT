@@ -54,39 +54,5 @@ public class AuthController {
 		session.invalidate();
 		return ResponseEntity.ok().build();
 	}
-	
-	@GetMapping("/{user_id}")
-	public ResponseEntity<UserInfo> getUser(HttpSession session, @PathVariable("user_id") String userId) {
-		
-		UserInfo user = (UserInfo) session.getAttribute("userId");
-		System.out.println(user.getUserId());
-		if (user.getUserId() == userId) {
-			UserInfo res = authService.getUser(userId);
-			
-			return ResponseEntity.ok(res);
-		} else {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-		}
-		
-	}
-	
-	@GetMapping("/users")
-	public ResponseEntity<List<UserInfo>> getUsers() {
-		
-		return ResponseEntity.ok(authService.getUsers());
-		
-	}
-	
-	@PutMapping("/{user_id}")
-	public ResponseEntity<UserInfo> updateUser(@RequestParam UserInfo userInfo) {
-		
-		boolean res = authService.updateUser(userInfo);
-		
-		if (res) {
-			return ResponseEntity.ok(userInfo);
-		} else {
-			return ResponseEntity.notFound().build();
-		}
-		
-	}
+
 }
