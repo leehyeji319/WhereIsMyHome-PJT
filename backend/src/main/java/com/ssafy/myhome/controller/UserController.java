@@ -33,7 +33,7 @@ public class UserController {
 	}
 	
 	//유저한명 가져오기
-	@GetMapping
+	@GetMapping("/user")
 	private ResponseEntity<UserInfo> getUser(@RequestParam(required = true) String userId) {
 		UserInfo user = userService.getUser(userId);
 		if (user != null) {
@@ -44,7 +44,7 @@ public class UserController {
 	}
 	
 	//mypage정보가져오기
-	@GetMapping
+	@GetMapping("/user/mypage")
 	private ResponseEntity<MyPageUserInfo> getUserMyPage(@RequestParam(required = true) String userId) {
 		MyPageUserInfo userMyPage = userService.getUserMyPage(userId);
 		if (userMyPage != null) {
@@ -67,7 +67,7 @@ public class UserController {
 	}
 	
 	//유저 삭제 is_deleted off
-	@DeleteMapping
+	@DeleteMapping("/user")
 	private ResponseEntity<?> deleteUser(@RequestParam(required = true) String userId) {
 		
 		boolean res = userService.deleteUser(userId);

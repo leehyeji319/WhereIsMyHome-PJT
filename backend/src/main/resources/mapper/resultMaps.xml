@@ -12,15 +12,24 @@
       <result column="user_name" property="userName"/>
       <result column="user_phone" property="userPhone"/>
       <result column="user_nickname" property="userNickname"/>
-      <result column="user_nickname" property="userNickname"/>
       <result column="user_role" property="userRole"/>
+      <result column="is_deleted" property="isDeleted"/>
       <association property="companyInfo" resultMap="CompanyResultMap" />
+      <collection property="userFileInfo" resultMap="FileInfoResultMap"/>
    </resultMap>
    
    <resultMap type="CompanyInfo" id="CompanyResultMap">
       <id column="user_id" property="userId"/>
       <result column="address" property="address"/>
-      <result column="registration_number" property="registerationNumber"/>
+      <result column="registration_number" property="registrationNumber"/>
+   </resultMap>
+   
+   <!-- FileInfo -->
+   <resultMap type="FileInfo" id="FileInfoResultMap">
+      <id column="file_id" property="fileId"/> 
+      <result column="saveFolder" property="saveFolder"/>
+      <result column="originalFile" property="originalFile"/>
+      <result column="saveFile" property="saveFile"/>
    </resultMap>
    
    <!-- Sale Board -->

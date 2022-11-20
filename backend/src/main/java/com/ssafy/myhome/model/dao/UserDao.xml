@@ -6,7 +6,7 @@
 	
 	<sql id="basicSelectUsersSQL">
 		select a.user_id, a.user_name, a.user_nickname, a.user_phone,
-		b.address, b.registration_number
+		b.address, b.registration_number, a.user_role
 		from user_info as a
 		left outer join company_info as b
 		on a.user_id = b.user_id
@@ -21,7 +21,7 @@
 		where a.user_id = #{userId}
 	</select>
 	
-	<select id="getUserMyPage" parameterType="String" resultMap="MyPageUserInfoResultMap">
+	<select id="getUserMyPage" parameterType="String" resultMap="com.ssafy.resultmaps.MyPageUserInfoResultMap">
 		<!-- 유저정보 + 내가올린 매물-->
 		select * from user_info as a
 		left join house_sale_board as b
@@ -30,11 +30,11 @@
 	
 	
 	
-	<select id="getUser" parameterType="String" resultType="UserInfo">
+	<select id="getUser" parameterType="String" resultMap="com.ssafy.resultmaps.UserResultMap">
 		select a.user_id, a.user_name, a.user_nickname, a.user_phone, a.user_role,
 		b.address, b.registration_number
 		from user_info as a
-		inner join company_info as b
+		left join company_info as b
 		on a.user_id = b.user_id
 		where a.user_id = #{userId}
 	</select>
