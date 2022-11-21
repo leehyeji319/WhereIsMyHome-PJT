@@ -44,44 +44,9 @@
 		where user_id = #{userId}
 	</select>
 	
-	<select id="getUser" parameterType="String" resultType="UserInfo">
-		select a.user_id, a.user_name, a.user_nickname, a.user_phone, a.user_role,
-		b.address, b.registration_number
-		from user_info as a
-		inner join company_info as b
-		on a.user_id = b.user_id
-		where a.user_id = #{userId}
+	<select id="validateDuplicateNickname" parameterType="String" resultType="int">
+		select count(user_nickname) from user_info
+		where user_nickname = #{userNickname}
 	</select>
-	
-	<select id="getUsers" resultMap="com.ssafy.resultmaps.UserResultMap">
-		<include refid="basicSelectUsersSQL"/>
-	</select>
-	
-	<!-- 유저 정보 수정 -->
-	<update id="updateUser" parameterType="UserInfo">
-		update user_info
-		<set>
-			<if test="userName != null">user_name = #{userName},</if>
-			<if test="usrePassword != null">user_password = #{usrePassword},</if>
-			<if test="userNickname != null">user_nickname = #{userNickname},</if>
-			<if test="userPhone != null">user_phone = #{userPhone},</if>
-		</set>
-		where user_id = #{userId}
-	</update>
-	
-	<!-- 회사 정보 수정 -->
-	<update id="updateCompany" parameterType="CompanyInfo">
-		update user_info
-		<set>
-			<if test="address != null">address = #{address},</if>
-			<if test="registrationNumber != null">registration_number = #{registrationNumber},</if>
-		</set>
-		where user_id = #{userId}
-	</update>
-	
-	<!-- 회원 정보 삭제 -->
-	<update id="deleteUser" parameterType="String">
-		update user_info set is_deleted = 0 where user_id = #{userId}
-	</update>
 	
 </mapper>

@@ -13,12 +13,12 @@
 		where interest_sale_id = #{interest_sale_id}
 	</select>
 	
-<!-- 	<select id="getUserInterestBoards" resultMap="UserInterestBoardMap" parameterType="String"> -->
-<!-- 		<include refid="basicSelectUserInterestBoardSQL"/> -->
-<!-- 		where user_id = #{user_id} -->
-<!-- 	</select> -->
+	<select id="getUserInterestBoards" resultMap="com.ssafy.resultmaps.UserInterestBoardMap" parameterType="String">
+		<include refid="basicSelectUserInterestBoardSQL"/>
+		where user_id = #{user_id}
+	</select>
 	
-	<insert id="insertUserInterestBoardMapping" parameterType="InterestHouse">
+	<insert id="insertUserInterestBoardMapping" parameterType="InterestBoard">
 		insert into user_interest_sale_mapping(user_id, board_id) values(#{user_id}, #{interestBoard.board.board_id})
 	</insert>
 	
