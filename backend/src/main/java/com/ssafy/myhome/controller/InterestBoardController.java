@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.myhome.model.dto.Board;
+import com.ssafy.myhome.model.dto.SaleBoard;
 import com.ssafy.myhome.model.dto.InterestBoard;
 import com.ssafy.myhome.model.service.InterestBoardService;
 
@@ -27,12 +27,14 @@ public class InterestBoardController {
 	
 	@GetMapping("/{board_id}")
 	private ResponseEntity<InterestBoard> getUserInterestBoard(@PathVariable("board_id") int interestBoardId) {
+		
 		InterestBoard interestBoard = interestBoardService.getUserInterestBoard(interestBoardId);
 		if (interestBoard != null) {
 			return ResponseEntity.ok(interestBoard);
 		} else {
 			return ResponseEntity.notFound().build();
 		}
+		
 	}
 	
 	@GetMapping
@@ -44,7 +46,7 @@ public class InterestBoardController {
 	
 	@PostMapping
 	private ResponseEntity<?> insertUserInterestBoardMapping(@RequestParam(required = true) String userId,
-			@RequestBody Board board) {
+			@RequestBody SaleBoard board) {
 		
 		boolean res = interestBoardService.insertUserInterestBoardMapping(userId, board);
 		
@@ -53,10 +55,12 @@ public class InterestBoardController {
 		} else {
 			return ResponseEntity.internalServerError().build();
 		}
+		
 	}
 	
 	@DeleteMapping("/{board_id}")
 	private ResponseEntity<?> deleteUserInterestBoardMapping(@PathVariable("board_id") int interestBoardId) {
+		
 		boolean res = interestBoardService.deleteUserInterestBoardMapping(interestBoardId);
 		
 		if (res) {
@@ -64,6 +68,7 @@ public class InterestBoardController {
 		} else {
 			return ResponseEntity.internalServerError().build();
 		}
+		
 	}
 	
 }

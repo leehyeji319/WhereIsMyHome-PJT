@@ -15,5 +15,4 @@ public interface InterestAreaService {
 
 	public boolean deleteInterestArea(int areaId);
 
-	
 }
