@@ -54,6 +54,9 @@ export default {
   components: {
     BasicHeader,
   },
+  methods: {
+    
+  }
 }
 </script>
 
