@@ -14,7 +14,7 @@
       <div class="collapse navbar-collapse justify-content-between" id="navbar-collapse">
         <ul class="navbar-nav">
           <li class="ms-lg-2 ms-md-1 nav-item"><router-link class="nav-link" to="/house/info">실거래가</router-link></li>
-          <li class="ms-lg-2 ms-md-1 nav-item"><router-link class="nav-link" to="/house/board">매물</router-link></li>
+          <li class="ms-lg-2 ms-md-1 nav-item"><router-link class="nav-link" to="/board">매물</router-link></li>
           <li class="ms-lg-2 ms-md-1 nav-item"><router-link class="nav-link" to="/notice">공지사항</router-link></li>
         </ul>
       </div>
