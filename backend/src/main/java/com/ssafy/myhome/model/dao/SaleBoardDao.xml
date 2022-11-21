@@ -6,13 +6,19 @@
 		SELECT sb.board_id, sb.title, sb.content, sb.hit, sb.created_at, sb.updated_at, sb.is_deleted, 
 				sb.sale_type, sb.sale_price, 
 				sb.building_type, sb.building_name, sb.building_address, sb.building_space, sb.building_floor_type, sb.building_floor, sb.building_room_num,
+				bf.file_id, bf.save_folder, bf.original_file, bf.save_file,
+				c.comment_id, c.user_id, c.user_nickname
+				
 				u.user_id, u.user_phone, u.user_nickname, u.user_role,
-				c.address, c.registration_number,
+				ci.address, ci.registration_number,
 				uf.file_id, uf.save_folder, uf.original_file, uf.save_file
-		FROM house_sale_board sb, user_info u LEFT OUTER JOIN company_info c ON (u.user_id = c.user_id), user_fileinfo uf
+		FROM house_sale_board sb LEFT JOIN board_fileinfo bf ON (sb.board_id = bf.board_id), 
+			user_info u LEFT OUTER JOIN company_info ci ON (u.user_id = ci.user_id), 
+			u LEFT OUTER JOIN user_fileinfo uf ON (u.user_id = uf.user_id), 
+			comment c
 		WHERE sb.user_id = u.user_id
 			AND sb.board_id = 
-			AND u.user_id = uf.user_id
+			AND sb.board_id = bf.board_id
 			AND u.is_deleted = 0 
 	</select>
 	
