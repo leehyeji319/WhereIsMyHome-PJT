@@ -27,12 +27,14 @@ public class InterestBoardController {
 	
 	@GetMapping("/{board_id}")
 	private ResponseEntity<InterestBoard> getUserInterestBoard(@PathVariable("board_id") int interestBoardId) {
+		
 		InterestBoard interestBoard = interestBoardService.getUserInterestBoard(interestBoardId);
 		if (interestBoard != null) {
 			return ResponseEntity.ok(interestBoard);
 		} else {
 			return ResponseEntity.notFound().build();
 		}
+		
 	}
 	
 	@GetMapping
@@ -53,10 +55,12 @@ public class InterestBoardController {
 		} else {
 			return ResponseEntity.internalServerError().build();
 		}
+		
 	}
 	
 	@DeleteMapping("/{board_id}")
 	private ResponseEntity<?> deleteUserInterestBoardMapping(@PathVariable("board_id") int interestBoardId) {
+		
 		boolean res = interestBoardService.deleteUserInterestBoardMapping(interestBoardId);
 		
 		if (res) {
@@ -64,6 +68,7 @@ public class InterestBoardController {
 		} else {
 			return ResponseEntity.internalServerError().build();
 		}
+		
 	}
 	
 }

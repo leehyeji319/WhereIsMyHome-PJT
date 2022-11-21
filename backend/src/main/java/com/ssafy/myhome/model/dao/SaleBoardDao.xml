@@ -2,24 +2,109 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.myhome.model.dao.SaleBoardDao">
 	<!-- 조회 -->
-	<select id="getSaleBoard" parameterType="_int" resultMap="com.ssafy.resultmaps.SaleBoardResultMap">
+	<select id="getSaleBoard" parameterType="int" resultMap="com.ssafy.resultmaps.SaleBoardResultMap">
 		SELECT sb.board_id, sb.title, sb.content, sb.hit, sb.created_at, sb.updated_at, sb.is_deleted, 
 				sb.sale_type, sb.sale_price, 
 				sb.building_type, sb.building_name, sb.building_address, sb.building_space, sb.building_floor_type, sb.building_floor, sb.building_room_num,
-				bf.file_id, bf.save_folder, bf.original_file, bf.save_file,
-				c.comment_id, c.user_id, c.user_nickname
-				
-				u.user_id, u.user_phone, u.user_nickname, u.user_role,
-				ci.address, ci.registration_number,
-				uf.file_id, uf.save_folder, uf.original_file, uf.save_file
-		FROM house_sale_board sb LEFT JOIN board_fileinfo bf ON (sb.board_id = bf.board_id), 
-			user_info u LEFT OUTER JOIN company_info ci ON (u.user_id = ci.user_id), 
-			u LEFT OUTER JOIN user_fileinfo uf ON (u.user_id = uf.user_id), 
-			comment c
-		WHERE sb.user_id = u.user_id
-			AND sb.board_id = 
-			AND sb.board_id = bf.board_id
-			AND u.is_deleted = 0 
+		        bf.file_id AS "bf_file_id", bf.save_folder AS "bf_save_folder", bf.original_file AS "bf_original_file", bf.save_file AS "bf_save_file",
+		       
+		        -- 탈퇴한 사용자의 매물 게시글일 경우
+		        IF (u.is_deleted = 1, NULL, u.user_id) AS "user_id", 
+		        IF (u.is_deleted = 1, NULL, u.user_phone) AS "user_phone",
+		        IF (u.is_deleted = 1, '탈퇴한 사용자', u.user_nickname) AS "user_nickname",
+		        IF (u.is_deleted = 1, NULL, u.user_role) AS "user_role",
+		        
+				IF (u.is_deleted = 1, NULL, ci.address) AS "address",
+		        IF (u.is_deleted = 1, NULL, ci.registration_number) AS "registration_number",
+		        IF (u.is_deleted = 1, NULL, uf.file_id) AS "file_id",
+		        IF (u.is_deleted = 1, NULL, uf.original_file) AS "original_file",
+		        IF (u.is_deleted = 1, NULL, uf.save_file) AS "save_file",
+		        
+		        -- 삭제된 댓글일 경우, 삭제되지 않았으면서 탈퇴한 사용자의 댓글일 경우, 그 외의 경우
+		        CASE 
+					WHEN c.is_deleted = 1 THEN NULL
+		            WHEN c.is_deleted = 0 AND u2.is_deleted = 1 THEN NULL
+		            ELSE c.comment_id
+				END AS "c_comment_id", 
+		        
+		        CASE 
+					WHEN c.is_deleted = 1 THEN NULL
+		            WHEN c.is_deleted = 0 AND u2.is_deleted = 1 THEN NULL
+		            ELSE c.user_id
+				END AS "c_user_id", 
+		        
+		        CASE 
+					WHEN c.is_deleted = 1 THEN NULL
+		            WHEN c.is_deleted = 0 AND u2.is_deleted = 1 THEN '탈퇴한 사용자'
+		            ELSE u2.user_nickname
+				END AS "c_user_nickname", 
+		        
+				CASE 
+					WHEN c.is_deleted = 1 THEN NULL
+		            WHEN c.is_deleted = 0 AND u2.is_deleted = 1 THEN NULL
+		            ELSE c.comment_parent
+				END AS "c_comment_parent", 
+		        
+		        CASE 
+					WHEN c.is_deleted = 1 THEN '삭제된 댓글입니다.'
+		            ELSE c.content
+				END AS "c_content", 
+		        
+		        CASE 
+					WHEN c.is_deleted = 1 THEN NULL
+		            ELSE c.created_at
+				END AS "c_created_at", 
+		        
+		        -- ---------------------------------------------
+		        
+		        CASE 
+					WHEN c2.is_deleted = 1 THEN NULL
+		            WHEN c2.is_deleted = 0 AND u3.is_deleted = 1 THEN NULL
+		            ELSE c2.comment_id
+				END AS "c_c2_comment_id", 
+		        
+		        CASE 
+					WHEN c2.is_deleted = 1 THEN NULL
+		            WHEN c2.is_deleted = 0 AND u3.is_deleted = 1 THEN NULL
+		            ELSE c2.user_id
+				END AS "c_c2_user_id", 
+		        
+		        CASE 
+					WHEN c2.is_deleted = 1 THEN NULL
+		            WHEN c2.is_deleted = 0 AND u3.is_deleted = 1 THEN '탈퇴한 사용자'
+		            ELSE u3.user_nickname
+				END AS "c_c2_user_nickname", 
+		        
+				CASE 
+					WHEN c2.is_deleted = 1 THEN NULL
+		            WHEN c2.is_deleted = 0 AND u3.is_deleted = 1 THEN NULL
+		            ELSE c2.comment_parent
+				END AS "c_c2_comment_parent", 
+		        
+		        CASE 
+					WHEN c2.is_deleted = 1 THEN '삭제된 댓글입니다.'
+		            ELSE c2.content
+				END AS "c_c2_content", 
+		        
+		        CASE 
+					WHEN c2.is_deleted = 1 THEN NULL
+		            ELSE c2.created_at
+				END AS "c_c2_created_at"
+		        
+		FROM house_sale_board sb 
+		LEFT JOIN board_fileinfo bf ON (sb.board_id = bf.board_id) 
+		
+		INNER JOIN user_info u ON (u.user_id = sb.user_id)
+		LEFT JOIN company_info ci ON (u.user_id = ci.user_id)
+		LEFT JOIN user_fileinfo uf ON (u.user_id = uf.user_id)
+		
+		LEFT JOIN comment c ON (sb.board_id = c.board_id) LEFT JOIN user_info u2 ON (c.user_id = u2.user_id)
+		LEFT JOIN comment c2 ON (c.comment_id = c2.comment_parent) LEFT JOIN user_info u3 ON (c2.user_id = u3.user_id)
+		
+		WHERE sb.is_deleted = 0
+		    AND sb.board_id = #{boardId}
+		    AND c.comment_parent IS NULL
+		ORDER BY c.created_at, c2.created_at;
 	</select>
 	
 	
@@ -28,30 +113,81 @@
 		SELECT sb.board_id, sb.title, sb.content, sb.hit, sb.created_at, sb.updated_at, sb.is_deleted, 
 				sb.sale_type, sb.sale_price, 
 				sb.building_type, sb.building_name, sb.building_address, sb.building_space, sb.building_floor_type, sb.building_floor, sb.building_room_num,
-				u.user_id, u.user_phone, u.user_nickname, u.user_role,
-				c.address, c.registration_number,
-				uf.file_id, uf.save_folder, uf.original_file, uf.save_file
-		FROM house_sale_board sb, user_info u LEFT OUTER JOIN company_info c ON (u.user_id = c.user_id), user_fileinfo uf
-		WHERE sb.user_id = u.user_id
-			AND sb.board_id = 
-			AND u.user_id = uf.user_id
-			AND u.is_deleted = 0 
-			AND sb.is_deleted = 0
+		        bf.file_id AS "bf_file_id", bf.save_folder AS "bf_save_folder", bf.original_file AS "bf_original_file", bf.save_file AS "bf_save_file",
+		       
+		        -- 탈퇴한 사용자의 매물 게시글일 경우
+		        IF (u.is_deleted = 1, NULL, u.user_id) AS "user_id", 
+				IF (u.is_deleted = 1, NULL, u.user_phone) AS "user_phone",
+				IF (u.is_deleted = 1, '탈퇴한 사용자', u.user_nickname) AS "user_nickname",
+				IF (u.is_deleted = 1, NULL, u.user_role) AS "user_role",
+		
+				IF (u.is_deleted = 1, NULL, ci.address) AS "address",
+				IF (u.is_deleted = 1, NULL, ci.registration_number) AS "registration_number",
+				IF (u.is_deleted = 1, NULL, uf.file_id) AS "file_id",
+				IF (u.is_deleted = 1, NULL, uf.original_file) AS "original_file",
+				IF (u.is_deleted = 1, NULL, uf.save_file) AS "save_file",
+				
+				(SELECT count(*) FROM comment c WHERE c.board_id = sb.board_id) AS comment_cnt,
+				(SELECT count(*) FROM user_interest_sale_mapping uis WHERE uis.board_id = sb.board_id) AS like_cnt
+		        
+		FROM house_sale_board sb 
+		LEFT JOIN board_fileinfo bf ON (sb.board_id = bf.board_id) 
+		
+		INNER JOIN user_info u ON (u.user_id = sb.user_id)
+		LEFT JOIN company_info ci ON (u.user_id = ci.user_id)
+		LEFT JOIN user_fileinfo uf ON (u.user_id = uf.user_id)
+		
+		WHERE sb.is_deleted = 0
+		ORDER BY sb.created_at DESC;
 	</select>
 	
 	
 	<!-- 등록 -->
-	<insert id="registerInterestArea" parameterType="Map">
-		INSERT INTO user_interest_area_mapping(user_id, baseaddress_id, is_main) 
-		VALUES(#{userId}, (SELECT baseaddress_id FROM baseaddress WHERE dongCode = #{dongCode}), 0)
+	<insert id="registerSaleBoard" parameterType="SaleBoard">
+		INSERT INTO house_sale_board
+			(title,
+			content,
+			sale_type,
+			sale_price,
+			building_type,
+			building_name,
+			building_address,
+			building_space,
+			building_floor_type,
+			building_floor,
+			building_room_num,
+			user_id)
+		VALUES
+			(#{title},
+			#{content},
+			#{saleType},
+			#{salePrice},
+			#{buildingType},
+			#{buildingName},
+			#{buildingAddress},
+			#{buildingSpace},
+			#{buildingFloorType},
+			#{buildingFloor},
+			#{buildingRoomNum},
+			#{userInfo.userId});
 	</insert>
 	
 	
 	<!-- 수정 -->
-	<update id="updateMain1To0InterestArea">
-		UPDATE user_interest_area_mapping 
-		SET is_main = 0
-		WHERE is_main = 1
+	<update id="updateSaleBoard" parameterType="SaleBoard">
+		UPDATE house_sale_board
+		SET title = #{title},
+			content = #{content},
+			sale_type = #{saleType},
+			sale_price = #{salePrice},
+			building_type = #{buildingType},
+			building_name = #{buildingName},
+			building_address = #{buildingAddress},
+			building_space = #{buildingSpace},
+			building_floor_type = #{buildingFloorType},
+			building_floor = #{buildingFloor},
+			building_room_num = #{buildingRoomNum}
+		WHERE board_id = #{boardId}
 	</update>
 	
 	

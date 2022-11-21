@@ -21,6 +21,7 @@ public class SaleBoard extends BasePostForm {
 	private double buildingRoomNum;
 	
 	private int commentCnt; //댓글 개수
+	private int likeCnt; //좋아요 개수
 	
 	private List<FileInfo> fileInfos;
 	private List<Comment> comments;

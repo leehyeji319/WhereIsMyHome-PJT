@@ -28,9 +28,9 @@
 	<!-- FileInfo -->
 	<resultMap type="FileInfo" id="FileInfoResultMap">
 		<id column="file_id" property="fileId"/> 
-		<result column="saveFolder" property="saveFolder"/>
-		<result column="originalFile" property="originalFile"/>
-		<result column="saveFile" property="saveFile"/>
+		<result column="save_folder" property="saveFolder"/>
+		<result column="original_file" property="originalFile"/>
+		<result column="save_file" property="saveFile"/>
 	</resultMap>
 	
 	<!-- Comment -->
@@ -44,6 +44,7 @@
 		<result column="created_at" property="createdAt"/>
 		<result column="updated_at" property="updatedAt"/>
 		<result column="is_deleted" property="isDeleted"/>
+		<collection property="nestedComments" resultMap="CommentResultMap" columnPrefix="c2_"/>
 	</resultMap>
 	
 	<!-- BasePostForm -->
@@ -75,9 +76,10 @@
 		<result column="building_floor_type" property="buildingFloorType"/>
 		<result column="building_floor" property="buildingFloor"/>
 		<result column="building_room_num" property="buildingRoomNum"/>
+		<result column="like_cnt" property="likeCnt"/>
 		<result column="comment_cnt" property="commentCnt"/>
-		<collection property="fileInfos" resultMap="FileInfoResultMap"/>
-		<collection property="comments" resultMap="CommentResultMap"/>
+		<collection property="fileInfos" resultMap="FileInfoResultMap" columnPrefix="bf_"/>
+		<collection property="comments" resultMap="CommentResultMap"  columnPrefix="c_"/>
 	</resultMap>
 	
 	
@@ -187,9 +189,9 @@
 	</resultMap>
 	
 	<!-- Interest User Board Mapping 전략 -->
-	<resultMap type="InterestBoard" id="UserInterestBoardMap">
-		<id column="interest_sale_id" property="interestBoardId"/>
-		<result column="user_id" property="usreId"/>
-		<result column="board_id" property="boardId"/>
-	</resultMap>
+<!-- 	<resultMap type="InterestBoard" id="UserInterestBoardMap"> -->
+<!-- 		<id column="interest_sale_id" property="interestSaleId"/> -->
+<!-- 		<result column="user_id" property="userId"/> -->
+<!-- 		<association property="board" resultMap="SaleBoardResultMap" /> -->
+<!-- 	</resultMap> -->
 </mapper>
