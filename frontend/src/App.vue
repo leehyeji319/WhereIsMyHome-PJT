@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <the-header-navbar></the-header-navbar>
-    <router-view/>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -18,15 +18,11 @@ export default {
 </script>
 
 <style>
-
 @import url("https://webfontworld.github.io/NanumSquareNeo/NanumSquareNeo.css");
 #app {
   font-family: "NanumSquareNeo";
   font-style: normal;
   font-display: swap;
-  text-align: center;
-}
-
 
 nav {
   padding: 30px;
