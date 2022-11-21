@@ -1,21 +1,39 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+    <the-header-navbar></the-header-navbar>
+    <router-view></router-view>
   </div>
 </template>
 
+<script>
+import TheHeaderNavbar from "@/components/basicLayout/TheHeaderNavbar";
+
+export default {
+  name: "App",
+  components: {
+    TheHeaderNavbar,
+  },
+};
+
+</script>
+
 <style>
+@import url("https://webfontworld.github.io/NanumSquareNeo/NanumSquareNeo.css");
+
 #app {
+  font-family: "NanumSquareNeo";
+  font-style: normal;
+  font-display: swap;
+  text-align: center;
+}
+
+/* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
+} */
 
 nav {
   padding: 30px;
