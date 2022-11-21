@@ -24,16 +24,8 @@
       <result column="registration_number" property="registrationNumber"/>
    </resultMap>
    
-   <!-- FileInfo -->
-   <resultMap type="FileInfo" id="FileInfoResultMap">
-      <id column="file_id" property="fileId"/> 
-      <result column="saveFolder" property="saveFolder"/>
-      <result column="originalFile" property="originalFile"/>
-      <result column="saveFile" property="saveFile"/>
-   </resultMap>
-   
    <!-- Sale Board -->
-   <resultMap type="Board" id="BoardResultMap">
+   <resultMap type="SaleBoard" id="BoardResultMap">
    		<id column="board_id" property="boardId"/>
    		<result column="user_id" property="userId"/>
    		<result column="title" property="title"/>
@@ -184,13 +176,9 @@
 
 
 	<!-- HouseInfo Mapping 전략 -->
-	<resultMap type="HouseInfo" id="HouseResultMap">
+	<resultMap type="HouseInfo" id="HouseResultMap" extends="DongCodeResultMap">
 		<id column="houseinfo_id" property="houseInfoId"/>
 		<result column="aptName" property="aptName"/>
-		<result column="sidoName" property="sidoName"/>
-		<result column="gugunName" property="gugunName"/>
-		<result column="dongName" property="dongName"/>
-		<result column="dongCode" property="dongCode"/>
 		<result column="buildYear" property="buildYear"/>
 		<result column="jibun" property="jibun"/>
 		<result column="lat" property="lat"/>
@@ -218,13 +206,13 @@
 	<resultMap type="InterestHouse" id="UserInterestHouseMap">
 		<id column="interest_house_id" property="interestHouseId"/>
 		<result column="user_id" property="userId"/>
-		<result column="houseinfo_id" property="houseInfoId"/>
+		<association property="houseInfo" resultMap="HouseResultMap"/>
 	</resultMap>
 	
 	<!-- Interest User Board Mapping 전략 -->
-<!-- 	<resultMap type="InterestBoard" id="UserInterestBoardMap"> -->
-<!-- 		<id column="interest_sale_id" property="interestSaleId"/> -->
-<!-- 		<result column="user_id" property="userId"/> -->
-<!-- 		<association property="board" resultMap="SaleBoardResultMap" /> -->
-<!-- 	</resultMap> -->
+	<resultMap type="InterestBoard" id="UserInterestBoardMap">
+		<id column="interest_sale_id" property="interestSaleId"/>
+		<result column="user_id" property="userId"/>
+		<association property="board" resultMap="SaleBoardResultMap" />
+	</resultMap>
 </mapper>

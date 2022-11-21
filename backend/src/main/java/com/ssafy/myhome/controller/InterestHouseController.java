@@ -18,7 +18,7 @@ import com.ssafy.myhome.model.dto.HouseInfo;
 import com.ssafy.myhome.model.dto.InterestHouse;
 import com.ssafy.myhome.model.service.InterestHouseService;
 
-@RequestMapping("api/users/interests/houses")
+@RequestMapping("/api/users/interests/houses")
 @RestController
 public class InterestHouseController {
 	
@@ -51,7 +51,7 @@ public class InterestHouseController {
 		boolean res = interestHouseService.insertUserInterestHouseMapping(userId, houseInfo);
 		
 		if (res) {
-			return ResponseEntity.created(URI.create("api/users/interest/houses/" + houseInfo.getHouseInfoId())).build();
+			return ResponseEntity.created(URI.create("api/houses/" + houseInfo.getHouseInfoId())).build();
 		} else {
 			return ResponseEntity.internalServerError().build();
 		}

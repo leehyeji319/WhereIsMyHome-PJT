@@ -1,15 +1,17 @@
 <template>
-  <hello-world />
+  <v-app>
+    <board-list></board-list>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from "../components/HelloWorld";
+import BoardList from "@/components/board/BoardList.vue";
 
 export default {
   name: "HomeView",
 
   components: {
-    HelloWorld,
+    BoardList,
   },
 };
 </script>
