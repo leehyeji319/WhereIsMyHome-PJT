@@ -56,16 +56,65 @@
    <resultMap type="MyPageUserInfo" id="MyPageUserInfoResultMap" autoMapping="true" extends="UserResultMap">
    		<collection property="userBoard" resultMap="BoardResultMap"/>
    </resultMap>
-   
 	
-	<!-- Notice -->
-	<resultMap type="Notice" id="NoticeResultMap">
-		<id column="noticeid" property="noticeId"/>
+	
+	<!-- FileInfo -->
+	<resultMap type="FileInfo" id="FileInfoResultMap">
+		<id column="file_id" property="fileId"/> 
+		<result column="save_folder" property="saveFolder"/>
+		<result column="original_file" property="originalFile"/>
+		<result column="save_file" property="saveFile"/>
+	</resultMap>
+	
+	<!-- Comment -->
+	<resultMap type="Comment" id="CommentResultMap">
+		<id column="comment_id" property="commentId"/> 
+		<result column="user_id" property="userId"/>
+		<result column="user_nickname" property="userNickname"/>
+		<result column="comment_parent" property="commentParent"/>
+		<result column="board_id" property="boardId"/>
+		<result column="content" property="content"/>
+		<result column="created_at" property="createdAt"/>
+		<result column="updated_at" property="updatedAt"/>
+		<result column="is_deleted" property="isDeleted"/>
+		<collection property="nestedComments" resultMap="CommentResultMap" columnPrefix="c2_"/>
+	</resultMap>
+	
+	<!-- BasePostForm -->
+	<resultMap type="BasePostForm" id="BasePostFormResultMap">
 		<result column="title" property="title"/>
 		<result column="content" property="content"/>
-		<result column="date_time" property="dateTime"/>
 		<result column="hit" property="hit"/>
+		<result column="created_at" property="createdAt"/>
+		<result column="updated_at" property="updatedAt"/>
+		<result column="is_deleted" property="isDeleted"/>
+		<association property="userInfo" resultMap="UserResultMap"/>
 	</resultMap>
+	
+	<!-- Notice -->
+	<resultMap type="Notice" id="NoticeResultMap" extends="BasePostFormResultMap">
+		<id column="noticeid" property="noticeId"/>
+		<collection property="fileInfos" resultMap="FileInfoResultMap"/>
+	</resultMap>
+	
+	<!-- SaleBoard -->
+	<resultMap type="SaleBoard" id="SaleBoardResultMap" extends="BasePostFormResultMap">
+		<id column="board_id" property="boardId"/>
+		<result column="sale_type" property="saleType"/>
+		<result column="sale_price" property="salePrice"/>
+		<result column="building_type" property="buildingType"/>
+		<result column="building_name" property="buildingName"/>
+		<result column="building_address" property="buildingAddress"/>
+		<result column="building_space" property="buildingSpace"/>
+		<result column="building_floor_type" property="buildingFloorType"/>
+		<result column="building_floor" property="buildingFloor"/>
+		<result column="building_room_num" property="buildingRoomNum"/>
+		<result column="like_cnt" property="likeCnt"/>
+		<result column="comment_cnt" property="commentCnt"/>
+		<collection property="fileInfos" resultMap="FileInfoResultMap" columnPrefix="bf_"/>
+		<collection property="comments" resultMap="CommentResultMap"  columnPrefix="c_"/>
+	</resultMap>
+	
 	
 	<!-- Label -->
 	<resultMap type="CommercialLabel" id="CommercialLabelResultMap">
@@ -133,6 +182,7 @@
 		<association property="baseAddress" resultMap="BaseAddressResultMap"/>
 	</resultMap>
 
+
 	<!-- HouseInfo Mapping 전략 -->
 	<resultMap type="HouseInfo" id="HouseResultMap">
 		<id column="houseinfo_id" property="houseInfoId"/>
@@ -150,7 +200,6 @@
 	<resultMap type="HouseInfo" id="HouseInfoDealResultMap" autoMapping="true" extends="HouseResultMap">
 		<collection property="houseDeals" resultMap="HouseDealResultMap"/>
 	</resultMap>
-	
 	
 	<!-- House Deal Mapping 전략 -->
 	<resultMap type="HouseDeal" id="HouseDealResultMap">
@@ -173,9 +222,9 @@
 	</resultMap>
 	
 	<!-- Interest User Board Mapping 전략 -->
-	<resultMap type="InterestBoard" id="UserInterestBoardMap">
-		<id column="interest_sale_id" property="interestBoardId"/>
-		<result column="user_id" property="usreId"/>
-		<result column="board_id" property="boardId"/>
-	</resultMap>
+<!-- 	<resultMap type="InterestBoard" id="UserInterestBoardMap"> -->
+<!-- 		<id column="interest_sale_id" property="interestSaleId"/> -->
+<!-- 		<result column="user_id" property="userId"/> -->
+<!-- 		<association property="board" resultMap="SaleBoardResultMap" /> -->
+<!-- 	</resultMap> -->
 </mapper>

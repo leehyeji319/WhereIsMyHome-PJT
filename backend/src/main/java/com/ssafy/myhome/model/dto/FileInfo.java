@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class FileInfo {
 
+	private int fileId;
 	private String saveFolder;
 	private String originalFile;
 	private String saveFile;
