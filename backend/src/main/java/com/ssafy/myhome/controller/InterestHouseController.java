@@ -1,7 +1,9 @@
 package com.ssafy.myhome.controller;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,13 +47,17 @@ public class InterestHouseController {
 	}
 	
 	@PostMapping
-	private ResponseEntity<?> insertUserInterestHouseMapping(@RequestParam(required = true) String userId, 
-			@RequestBody HouseInfo houseInfo) {
+	private ResponseEntity<?> registerUserInterestHouseMapping(@RequestParam(required = true) String userId, 
+			@RequestBody int houseInfoId) {
 		
-		boolean res = interestHouseService.insertUserInterestHouseMapping(userId, houseInfo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userId", userId);
+		map.put("houseInfoId", houseInfoId);
+		
+		boolean res = interestHouseService.registerUserInterestHouseMapping(map);
 		
 		if (res) {
-			return ResponseEntity.created(URI.create("api/users/interest/houses/" + houseInfo.getHouseInfoId())).build();
+			return ResponseEntity.created(URI.create("api/houses/" + houseInfoId)).build();
 		} else {
 			return ResponseEntity.internalServerError().build();
 		}
