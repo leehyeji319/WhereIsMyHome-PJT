@@ -7,7 +7,7 @@ const boardStore = {
     boards: [],
     board: {},
 
-    
+
   },
   getters: {
     boards(state) {
@@ -20,7 +20,7 @@ const boardStore = {
     },
     [Constant.SET_BOARD](state, payload) {
       state.board = payload;
-    }
+    },
   },
   actions: { //service 느낌
     [Constant.GET_BOARDS](context) {
@@ -31,6 +31,18 @@ const boardStore = {
     [Constant.GET_BOARD](context, payload) {
       return restApi.get(`/api/boards/${payload}`)
       .then(({data}) => context.commit(Constant.SET_BOARD));
+    },
+    [Constant.REGISTER_BOARD](context, payload) {
+      return restApi.post(`/api/boards`, payload)
+      .then(() => console.log(`store action ${Constant.REGISTER_BOARD}`));
+    },
+    [Constant.UPDATE_BOARD](context, board) {
+      return restApi.post(`/api/boards/${board.boardId}`, board)
+      .then(() => console.log(`store action ${Constant.UPDATE_BOARD}`));
+    },
+    [Constant.DELETE_BOARD](context, board) {
+      return restApi.delete(`/api/boards/${board.boardId}`, board)
+      .then(() => console.log(`store action ${Constant.DELETE_BOARD}`));
     }
   }
 }

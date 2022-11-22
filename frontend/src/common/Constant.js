@@ -5,5 +5,7 @@ export default Object.freeze({
   SET_BOARDS : "setBoards",
   GET_BOARD : "getBoard",
   SET_BOARD : "setBoard",
-
+  REGISTER_BOARD: "registerBoard",
+  UPDATE_BOARD : "updateBoard",
+  DELETE_BOARD: "deleteBoard",
 })

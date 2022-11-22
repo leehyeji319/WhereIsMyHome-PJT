@@ -21,9 +21,14 @@
                     </v-carousel-item>
                     <v-fade-transition>
                       <v-overlay opacity="0" absolute color="#036358">
-                        <v-btn :class="fav ? 'red--text' : 'black--text'" icon @click="fav = !fav">
-                          <v-icon>mdi-heart</v-icon>
-                        </v-btn>
+                        <v-row>
+                          <v-col cols="11"> </v-col>
+                          <v-col cols="1">
+                            <v-btn :class="fav ? 'red--text' : 'black--text'" icon @click="fav = !fav">
+                              <v-icon class="align-top justify-end">mdi-heart</v-icon>
+                            </v-btn>
+                          </v-col>
+                        </v-row>
                       </v-overlay>
                     </v-fade-transition>
                   </v-carousel>
