@@ -138,7 +138,7 @@
 		LEFT JOIN user_fileinfo uf ON (u.user_id = uf.user_id)
 		
 		WHERE sb.is_deleted = 0
-		ORDER BY sb.created_at DESC;
+		ORDER BY sb.created_at DESC
 	</select>
 	
 	

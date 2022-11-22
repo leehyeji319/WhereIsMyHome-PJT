@@ -1,7 +1,9 @@
 package com.ssafy.myhome.controller;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,16 +11,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.myhome.model.dto.SaleBoard;
 import com.ssafy.myhome.model.dto.InterestBoard;
 import com.ssafy.myhome.model.service.InterestBoardService;
 
-@RequestMapping("/api/user/interests/boards")
+@RequestMapping("/api/users/interests/boards")
 @RestController
 public class InterestBoardController {
 
@@ -45,13 +45,16 @@ public class InterestBoardController {
 	}
 	
 	@PostMapping
-	private ResponseEntity<?> insertUserInterestBoardMapping(@RequestParam(required = true) String userId,
-			@RequestBody SaleBoard board) {
+	private ResponseEntity<?> registerUserInterestBoardMapping(@RequestParam(required = true) String userId, @RequestParam(required = true) int boardId) {
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("userId", userId);
+		map.put("boardId", boardId);
 		
-		boolean res = interestBoardService.insertUserInterestBoardMapping(userId, board);
+		boolean res = interestBoardService.registerUserInterestBoardMapping(map);
 		
 		if (res) {
-			return ResponseEntity.created(URI.create("api/users/interest/boards/" + board.getBoardId())).build();
+			return ResponseEntity.created(URI.create("api/users/interest/boards/" + boardId)).build();
 		} else {
 			return ResponseEntity.internalServerError().build();
 		}
