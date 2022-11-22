@@ -23,34 +23,7 @@
       <result column="address" property="address"/>
       <result column="registration_number" property="registrationNumber"/>
    </resultMap>
-   
-   <!-- FileInfo -->
-   <resultMap type="FileInfo" id="FileInfoResultMap">
-      <id column="file_id" property="fileId"/> 
-      <result column="saveFolder" property="saveFolder"/>
-      <result column="originalFile" property="originalFile"/>
-      <result column="saveFile" property="saveFile"/>
-   </resultMap>
-   
-   <!-- Sale Board -->
-   <resultMap type="Board" id="BoardResultMap">
-   		<id column="board_id" property="boardId"/>
-   		<result column="user_id" property="userId"/>
-   		<result column="title" property="title"/>
-   		<result column="content" property="content"/>
-   		<result column="building_address" property="buildingAddress"/>
-   		<result column="building_floor" property="buildingFloor"/>
-   		<result column="building_floor_type" property="buildingFloorType"/>
-   		<result column="building_name" property="buildingName"/>
-   		<result column="building_room_num" property="buildingRoomNum"/>
-   		<result column="building_space" property="buildingSpace"/>
-   		<result column="building_address" property="buildingAddress"/>
-   		<result column="created_at" property="createdAt"/>
-   		<result column="updated_at" property="updatedAt"/>
-   		<result column="hit" property="hit"/>
-   		<result column="sale_price" property="salePrice"/>
-   		<result column="sale_type" property="saleType"/>
-   </resultMap>
+  
    
    <!-- MyPage -->
    <resultMap type="MyPageUserInfo" id="MyPageUserInfoResultMap" autoMapping="true" extends="UserResultMap">

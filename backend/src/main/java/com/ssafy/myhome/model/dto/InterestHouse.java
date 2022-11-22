@@ -9,6 +9,6 @@ public class InterestHouse {
 	
 	private int interestHouseId;
 	private String userId;
-	private HouseInfo HouseInfo;
+	private HouseInfo houseInfo;
 	
 }

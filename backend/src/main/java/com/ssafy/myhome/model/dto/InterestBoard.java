@@ -9,6 +9,6 @@ public class InterestBoard {
 
 	private int interestSaleId;
 	private String userId;
-	private SaleBoard board;
+	private SaleBoard saleBoard;
 	
 }
