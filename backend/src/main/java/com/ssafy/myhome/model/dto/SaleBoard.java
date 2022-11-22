@@ -10,7 +10,7 @@ import lombok.Setter;
 public class SaleBoard extends BasePostForm {
 
 	private int boardId;
-	private String saleType; //매매,전세,월세,반전세
+	private String saleType; //매매, 전세, 월세, 반전세
 	private int salePrice;
 	private String buildingType; //다세대주택, 아파트, 빌라 
 	private String buildingName;

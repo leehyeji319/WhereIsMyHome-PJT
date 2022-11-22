@@ -195,9 +195,9 @@
 	</resultMap>
 	
 	<!-- Interest User Board Mapping 전략 -->
-<!-- 	<resultMap type="InterestBoard" id="UserInterestBoardMap"> -->
-<!-- 		<id column="interest_sale_id" property="interestSaleId"/> -->
-<!-- 		<result column="user_id" property="userId"/> -->
-<!-- 		<association property="board" resultMap="SaleBoardResultMap" /> -->
-<!-- 	</resultMap> -->
+	<resultMap type="InterestBoard" id="UserInterestBoardMap">
+		<id column="interest_sale_id" property="interestSaleId"/>
+		<result column="user_id" property="userId"/>
+		<association property="saleBoard" resultMap="SaleBoardResultMap" />
+	</resultMap>
 </mapper>

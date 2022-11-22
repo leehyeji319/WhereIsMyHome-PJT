@@ -4,27 +4,65 @@
 
 <mapper namespace="com.ssafy.myhome.model.dao.InterestBoardDao">
 	
-	<sql id="basicSelectUserInterestBoardSQL">
-		SELECT interest_sale_id, user_id, board_id 
-		FROM user_interest_sale_mapping
-	</sql>
+<!-- 	<sql id="basicSelectUserInterestBoardSQL"> -->
+<!-- 		SELECT interest_sale_id, user_id, board_id  -->
+<!-- 		FROM user_interest_sale_mapping -->
+<!-- 	</sql> -->
 	
-	<select id="getUserInterestBoard" resultType="InterestBoard" parameterType="int">
-		<include refid="basicSelectUserInterestBoardSQL"/>
-		where interest_sale_id = #{interest_sale_id}
-	</select>
+<!-- 	<select id="getUserInterestBoard" resultType="InterestBoard" parameterType="int"> -->
+<!-- 		<include refid="basicSelectUserInterestBoardSQL"/> -->
+<!-- 		where interest_sale_id = #{interest_sale_id} -->
+<!-- 	</select> -->
 	
+	
+	<!-- 리스트 조회 -->
 	<select id="getUserInterestBoards" resultMap="com.ssafy.resultmaps.UserInterestBoardMap" parameterType="String">
-		<include refid="basicSelectUserInterestBoardSQL"/>
-		where user_id = #{user_id}
+		SELECT uis.interest_sale_id,
+				sb.board_id, sb.title, sb.content, sb.hit, sb.created_at, sb.updated_at, sb.is_deleted, 
+				sb.sale_type, sb.sale_price, 
+				sb.building_type, sb.building_name, sb.building_address, sb.building_space, sb.building_floor_type, sb.building_floor, sb.building_room_num,
+		        bf.file_id AS "bf_file_id", bf.save_folder AS "bf_save_folder", bf.original_file AS "bf_original_file", bf.save_file AS "bf_save_file",
+		       
+		        -- 탈퇴한 사용자의 매물 게시글일 경우
+		        IF (u.is_deleted = 1, NULL, u.user_id) AS "user_id", 
+				IF (u.is_deleted = 1, NULL, u.user_phone) AS "user_phone",
+				IF (u.is_deleted = 1, '탈퇴한 사용자', u.user_nickname) AS "user_nickname",
+				IF (u.is_deleted = 1, NULL, u.user_role) AS "user_role",
+		
+				IF (u.is_deleted = 1, NULL, ci.address) AS "address",
+				IF (u.is_deleted = 1, NULL, ci.registration_number) AS "registration_number",
+				IF (u.is_deleted = 1, NULL, uf.file_id) AS "file_id",
+				IF (u.is_deleted = 1, NULL, uf.original_file) AS "original_file",
+				IF (u.is_deleted = 1, NULL, uf.save_file) AS "save_file",
+				
+				(SELECT count(*) FROM comment c WHERE c.board_id = sb.board_id) AS comment_cnt,
+				(SELECT count(*) FROM user_interest_sale_mapping uis WHERE uis.board_id = sb.board_id) AS like_cnt
+		        
+		FROM user_interest_sale_mapping uis
+		INNER JOIN house_sale_board sb ON (uis.board_id = sb.board_id) 
+		LEFT JOIN board_fileinfo bf ON (sb.board_id = bf.board_id) 
+		
+		INNER JOIN user_info u ON (u.user_id = sb.user_id)
+		LEFT JOIN company_info ci ON (u.user_id = ci.user_id)
+		LEFT JOIN user_fileinfo uf ON (u.user_id = uf.user_id)
+		
+		WHERE sb.is_deleted = 0
+			AND uis.user_id = #{userId}
+		ORDER BY sb.created_at DESC
 	</select>
 	
-	<insert id="insertUserInterestBoardMapping" parameterType="InterestBoard">
-		insert into user_interest_sale_mapping(user_id, board_id) values(#{user_id}, #{interestBoard.board.board_id})
+	
+	<!-- 등록 -->
+	<insert id="registerUserInterestBoardMapping" parameterType="map">
+		INSERT INTO user_interest_sale_mapping(user_id, board_id) 
+		VALUES (#{userId}, #{boardId})
 	</insert>
 	
+	
+	<!-- 삭제 -->
 	<delete id="deleteUserInterestBoardMapping" parameterType="int">
-		delete from user_interest_sale_mapping where interest_sale_id = #{interest_sale_id}
+		DELETE FROM user_interest_sale_mapping 
+		WHERE interest_sale_id = #{interestSaleId}
 	</delete>
 	
 </mapper>
