@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <!-- <board-list></board-list> -->
+    <board-list></board-list>
     <board-detail></board-detail>
   </v-app>
 </template>
@@ -13,7 +13,7 @@ export default {
   name: "HomeView",
 
   components: {
-    // BoardList,
+    BoardList,
     BoardDetail,
   },
 };

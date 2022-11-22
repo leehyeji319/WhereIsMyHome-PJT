@@ -6,8 +6,6 @@ const boardStore = {
   state: {
     boards: [],
     board: {},
-
-
   },
   getters: {
     boards(state) {
@@ -20,6 +18,7 @@ const boardStore = {
     },
     [Constant.SET_BOARD](state, payload) {
       state.board = payload;
+      // console.log(state.board);
     },
   },
   actions: { //service 느낌
@@ -28,10 +27,14 @@ const boardStore = {
         context.commit(Constant.SET_BOARDS, data);
       });
     },
+
     [Constant.GET_BOARD](context, payload) {
-      return restApi.get(`/api/boards/${payload}`)
-      .then(({data}) => context.commit(Constant.SET_BOARD));
+      return restApi.get(`/api/boards/${payload}`).then(({ data }) => {
+        context.commit(Constant.SET_BOARD, data);
+        // console.log(data);
+      })
     },
+
     [Constant.REGISTER_BOARD](context, payload) {
       return restApi.post(`/api/boards`, payload)
       .then(() => console.log(`store action ${Constant.REGISTER_BOARD}`));
