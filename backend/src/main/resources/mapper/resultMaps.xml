@@ -23,7 +23,26 @@
       <result column="address" property="address"/>
       <result column="registration_number" property="registrationNumber"/>
    </resultMap>
-  
+   
+   <!-- Sale Board -->
+   <resultMap type="SaleBoard" id="BoardResultMap">
+   		<id column="board_id" property="boardId"/>
+   		<result column="user_id" property="userId"/>
+   		<result column="title" property="title"/>
+   		<result column="content" property="content"/>
+   		<result column="building_address" property="buildingAddress"/>
+   		<result column="building_floor" property="buildingFloor"/>
+   		<result column="building_floor_type" property="buildingFloorType"/>
+   		<result column="building_name" property="buildingName"/>
+   		<result column="building_room_num" property="buildingRoomNum"/>
+   		<result column="building_space" property="buildingSpace"/>
+   		<result column="building_address" property="buildingAddress"/>
+   		<result column="created_at" property="createdAt"/>
+   		<result column="updated_at" property="updatedAt"/>
+   		<result column="hit" property="hit"/>
+   		<result column="sale_price" property="salePrice"/>
+   		<result column="sale_type" property="saleType"/>
+   </resultMap>
    
    <!-- MyPage -->
    <resultMap type="MyPageUserInfo" id="MyPageUserInfoResultMap" autoMapping="true" extends="UserResultMap">
@@ -157,13 +176,9 @@
 
 
 	<!-- HouseInfo Mapping 전략 -->
-	<resultMap type="HouseInfo" id="HouseResultMap">
+	<resultMap type="HouseInfo" id="HouseResultMap" extends="DongCodeResultMap">
 		<id column="houseinfo_id" property="houseInfoId"/>
 		<result column="aptName" property="aptName"/>
-		<result column="sidoName" property="sidoName"/>
-		<result column="gugunName" property="gugunName"/>
-		<result column="dongName" property="dongName"/>
-		<result column="dongCode" property="dongCode"/>
 		<result column="buildYear" property="buildYear"/>
 		<result column="jibun" property="jibun"/>
 		<result column="lat" property="lat"/>
@@ -191,13 +206,13 @@
 	<resultMap type="InterestHouse" id="UserInterestHouseMap">
 		<id column="interest_house_id" property="interestHouseId"/>
 		<result column="user_id" property="userId"/>
-		<result column="houseinfo_id" property="houseInfoId"/>
+		<association property="houseInfo" resultMap="HouseResultMap"/>
 	</resultMap>
 	
 	<!-- Interest User Board Mapping 전략 -->
 	<resultMap type="InterestBoard" id="UserInterestBoardMap">
 		<id column="interest_sale_id" property="interestSaleId"/>
 		<result column="user_id" property="userId"/>
-		<association property="saleBoard" resultMap="SaleBoardResultMap" />
+		<association property="board" resultMap="SaleBoardResultMap" />
 	</resultMap>
 </mapper>

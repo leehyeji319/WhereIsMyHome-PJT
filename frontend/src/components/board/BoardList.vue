@@ -3,37 +3,34 @@
     <v-app>
       <v-container fluid grid-list-xl>
         <v-layout wrap justify-space-around>
-          <v-flex v-for="board in boards" :key="board.board_id">
+          <v-flex v-for="board in boards" :key="board.board_id" @click="pickBoard(board.board_id)">
             <v-card :loading="loading" class="mx-auto my-12" max-width="374">
               <template slot="progress">
                 <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
               </template>
               <!-- carousel -->
-              <template>
-                <v-carousel interval="2000" cycle height="200" hide-delimiter-background show-arrows-on-hover>
-                  <v-carousel-item v-for="(slide, i) in slides" :key="i">
-                    <v-item v-slot="{ active, toggle }">
-                      <v-img
-                        :src="`https://cdn.vuetifyjs.com/images/${item.src}`"
-                        height="150"
-                        class="text-right pa-2"
-                        @click="toggle"
-                      >
-                        <v-btn icon dark>
-                          <v-icon>
-                            {{ active ? "mdi-heart" : "mdi-heart-outline" }}
-                          </v-icon>
+              <v-hover>
+                <template v-slot:default="{}">
+                  <v-carousel interval="3000" cycle height="200" hide-delimiter-background show-arrows-on-hover>
+                    <v-carousel-item v-for="(slide, i) in slides" :key="i">
+                      <v-sheet :color="colors[i]" height="100%">
+                        <v-row class="fill-height" align="center" justify="center">
+                          <div class="text-h2">{{ slide }} Slide</div>
+                        </v-row>
+                      </v-sheet>
+                    </v-carousel-item>
+                    <v-fade-transition>
+                      <v-overlay align-items="top" justify-content="right" opacity="0" absolute color="#036358">
+                        <div class="pa-2"></div>
+                        <v-btn :class="fav ? 'red--text' : 'black--text'" icon @click="fav = !fav">
+                          <v-icon class="pa-1 mr-2 align-top justify-end" size="30">mdi-heart</v-icon>
                         </v-btn>
-                      </v-img>
-                    </v-item>
-                    <v-sheet :color="colors[i]" height="100%">
-                      <v-row class="fill-height" align="center" justify="center">
-                        <div class="text-h2">{{ slide }} Slide</div>
-                      </v-row>
-                    </v-sheet>
-                  </v-carousel-item>
-                </v-carousel>
-              </template>
+                      </v-overlay>
+                    </v-fade-transition>
+                  </v-carousel>
+                </template>
+              </v-hover>
+             
               <v-card-title>{{ board.title }}</v-card-title>
               <v-card-text>
                 <v-row align="center" class="mx-0"> </v-row>
@@ -54,27 +51,50 @@
 </template>
 
 <script>
-import axios from "axios";
+import Constant from "@/common/Constant.js";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "BoardList",
   data() {
     return {
-      boards: [],
       colors: ["indigo", "warning", "pink darken-2", "red lighten-1", "deep-purple accent-4"],
       slides: ["F", "S", "T", "F", "F"],
+      loading: true,
+      overlay: false,
+      fav: true,
+      active: true,
     };
   },
+  computed: {
+    ...mapGetters("boardStore", ["boards"]),
+  },
   methods: {
-    getBoards() {
-      axios.get("http://localhost:10055/api/boards").then(({ data }) => {
-        // console.log(data);
-        this.boards = data;
-      });
+    ...mapActions("boardStore", [Constant.GET_BOARDS]),
+    pickBoard(boardId) {
+      this.$emit("select-board", boardId);
+      this.$router.push(`/board/detail/${boardId}`);
     },
   },
-  created() {
-    this.getBoards();
+  async created() {
+    await this[Constant.GET_BOARDS]();
+    // await console.log(this[Constant.GET_BOARDS]());
+    this.loading = false;
+    // console.log("boards created...");
   },
+  // methods: {
+  //   getBoards() {
+  //     axios.get("http://localhost:10055/api/boards").then(({ data }) => {
+  //       // console.log(data);
+  //       this.boards = data;
+  //     });
+  //   },
+  //   pickBoard() {
+  //     this.$emit("select-board", board_id);
+  //   },
+  // },
+  // created() {
+  //   this.getBoards();
+  // },
 };
 </script>
 
