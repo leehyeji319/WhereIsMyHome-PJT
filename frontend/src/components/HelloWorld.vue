@@ -1,11 +1,11 @@
 <template>
   <v-container fluid>
-    <div>
+    <div style="height: 100%">
       <v-row no-gutters>
         <v-col cols="3">
           <v-card color="basil">
             <v-card-title class="text-center justify-center py-6">
-              <h1 class="font-weight-bold text-h2 basil--text">MY PAGE</h1>
+              <h3 class="font-weight-bold text-h3 basil--text">실거래가 조회</h3>
             </v-card-title>
 
             <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
@@ -19,60 +19,81 @@
                 <v-card color="basil" flat>
                   <v-card-text>
                     <v-form v-model="valid" ref="form" lazy-validation>
-                      <v-row justify="align-center" no-gutters>
-                        <v-col class="d-flex mr-1">
-                          <v-select
-                            v-model="selectedSido"
-                            :rules="[(v) => !!v || '필수']"
-                            required
-                            :items="sidos"
-                            label="시/도"
-                            outlined
-                            dense
-                          ></v-select>
-                        </v-col>
+                      <v-row>
+                        <v-col lg="10">
+                          <v-row no-gutters>
+                            <v-col class="d-flex mr-1">
+                              <v-select
+                                v-model="selectedSido"
+                                required
+                                :items="sidos"
+                                label="시/도"
+                                outlined
+                                dense
+                              ></v-select>
+                            </v-col>
 
-                        <v-col class="d-flex mr-1">
-                          <v-select
-                            v-model="selectedGugun"
-                            :rules="[(v) => !!v || '필수']"
-                            required
-                            :items="guguns"
-                            label="구/군"
-                            outlined
-                            dense
-                          ></v-select>
-                        </v-col>
+                            <v-col class="d-flex mr-1">
+                              <v-select
+                                v-model="selectedGugun"
+                                required
+                                :items="guguns"
+                                label="구/군"
+                                outlined
+                                dense
+                              ></v-select>
+                            </v-col>
 
-                        <v-col class="d-flex mr-1">
-                          <v-select
-                            v-model="selectedDong"
-                            :rules="[(v) => !!v || '필수']"
-                            required
-                            :items="dongs"
-                            label="동"
-                            outlined
-                            dense
-                          ></v-select>
-                        </v-col>
+                            <v-col class="d-flex mr-1">
+                              <v-select
+                                v-model="selectedDong"
+                                required
+                                :items="dongs"
+                                label="동"
+                                outlined
+                                dense
+                              ></v-select>
+                            </v-col>
 
-                        <v-col class="d-flex" lg="1">
-                          <v-tooltip top>
-                            <template v-slot:activator="{ on, attrs }">
-                              <v-btn
-                                :disabled="!valid"
-                                color="success"
-                                @click="validate"
-                                fab
-                                small
-                                v-bind="attrs"
-                                v-on="on"
+                            <v-col class="d-flex" lg="1">
+                              <v-tooltip top>
+                                <template v-slot:activator="{ on, attrs }">
+                                  <v-btn
+                                    :disabled="!valid"
+                                    color="success"
+                                    @click="validate"
+                                    small
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    fab
+                                  >
+                                    <v-icon dark class="mx-2"> mdi-plus </v-icon>
+                                  </v-btn>
+                                </template>
+                                <span>관심 지역 추가</span>
+                              </v-tooltip>
+                            </v-col>
+                          </v-row>
+
+                          <v-row no-gutters>
+                            <v-col>
+                              <v-text-field
+                                dense
+                                v-model="message"
+                                outlined
+                                clearable
+                                label="건물명으로 검색"
+                                type="text"
                               >
-                                <v-icon dark class="mx-2"> mdi-plus </v-icon>
-                              </v-btn>
-                            </template>
-                            <span>관심 지역 추가</span>
-                          </v-tooltip>
+                              </v-text-field>
+                            </v-col>
+                          </v-row>
+                        </v-col>
+
+                        <v-col lg="2">
+                          <v-btn color="success" @click="validate" style="width: 100%; height: 100%">
+                            <v-icon dark class="mx-2"> mdi-magnify </v-icon>
+                          </v-btn>
                         </v-col>
                       </v-row>
                     </v-form>
@@ -104,7 +125,7 @@
         </v-col>
 
         <v-col>
-          <v-card class="pa-2" outlined tile> 지도다 </v-card>
+          <kakao-map />
         </v-col>
       </v-row>
     </div>
@@ -112,8 +133,22 @@
 </template>
 
 <script>
+  import KakaoMap from "./KakaoMap.vue";
+  // import { validationMixin } from "vuelidate";
+  // import { required, maxLength, email } from "vuelidate/lib/validators";
+
   export default {
     name: "HelloWorld",
+
+    components: {
+      KakaoMap,
+    },
+
+    // mixins: [validationMixin],
+
+    // validations: {
+    //   select: { required },
+    // },
 
     data() {
       return {
@@ -130,6 +165,9 @@
         selectedSido: null,
         selectedGugun: null,
         selectedDong: null,
+
+        message: null,
+        loading: false,
       };
     },
 
@@ -145,7 +183,20 @@
         this.clicked = true;
       },
       validate() {
-        this.$refs.form.validate();
+        this.$refs.form[0].validate();
+      },
+
+      // submit() {
+      //   this.$v.$touch();
+      // },
+
+      clickMe() {
+        this.loading = true;
+        this.message = "Wait for it...";
+        setTimeout(() => {
+          this.loading = false;
+          this.message = `You've clicked me!`;
+        }, 2000);
       },
     },
 
@@ -158,6 +209,15 @@
         }
       },
     },
+
+    // computed: {
+    //   selectErrors() {
+    //     const errors = [];
+    //     if (!this.$v.select.$dirty) return errors;
+    //     !this.$v.select.required && errors.push("Item is required");
+    //     return errors;
+    //   },
+    // },
   };
 </script>
 
