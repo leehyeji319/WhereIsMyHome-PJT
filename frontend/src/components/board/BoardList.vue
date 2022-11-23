@@ -30,6 +30,7 @@
                   </v-carousel>
                 </template>
               </v-hover>
+             
               <v-card-title>{{ board.title }}</v-card-title>
               <v-card-text>
                 <v-row align="center" class="mx-0"> </v-row>

@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <home-view> </home-view>
+
   </v-app>
 </template>
 
@@ -16,6 +17,7 @@ export default {
     HomeView,
   },
 };
+
 </script>
 
 <style>
