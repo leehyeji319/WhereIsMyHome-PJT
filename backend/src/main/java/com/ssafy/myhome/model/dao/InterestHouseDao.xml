@@ -13,8 +13,9 @@
 		where user_id = #{user_id});
 	</select>
 	
-	<insert id="insertUserInterestHouseMapping" parameterType="InterestHouse">
-		insert into user_interest_house_mapping(user_id, houseinfo_id) values(#{userId}, #{houseInfo.houseInfoId})
+	<insert id="registerUserInterestHouseMapping" parameterType="map">
+		insert into user_interest_house_mapping(user_id, board_id)
+		values (#{userId}, #{houseInfoId})
 	</insert>
 	
 	<delete id="deleteUserInterestHouseMapping" parameterType="int">
