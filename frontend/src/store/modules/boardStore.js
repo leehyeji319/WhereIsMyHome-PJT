@@ -6,10 +6,15 @@ const boardStore = {
   state: {
     boards: [],
     board: {},
+    likeBoardId: '',
+    loginedUser: '',
   },
   getters: {
     boards(state) {
       return state.boards
+    },
+    board(state){
+      return state.board;
     }
   },
   mutations: { //dao 느낌 

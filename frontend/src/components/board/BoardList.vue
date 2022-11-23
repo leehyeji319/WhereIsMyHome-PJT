@@ -20,7 +20,7 @@
                       </v-sheet>
                     </v-carousel-item>
                     <v-fade-transition>
-                      <v-overlay align-items="" justify-content="right" opacity="0" absolute color="#036358">
+                      <v-overlay align-items="top" justify-content="right" opacity="0" absolute color="#036358">
                         <div class="pa-2"></div>
                         <v-btn :class="fav ? 'red--text' : 'black--text'" icon @click="fav = !fav">
                           <v-icon class="pa-1 mr-2 align-top justify-end" size="30">mdi-heart</v-icon>
