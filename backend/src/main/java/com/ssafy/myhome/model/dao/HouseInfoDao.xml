@@ -6,14 +6,14 @@
 	
 	<sql id="basicSelectHouseSQL">
 		select houseinfo_id, aptName, dongCode, dongName, buildYear, jibun, lat, lng
-		from houseinfo
+		from house_info
 	</sql>
 	
 	<!-- basic get House List -->
 	<sql id="basicSelectHouseListSQL">
 		select 
 		a.houseinfo_id, a.aptName, b.sidoName, b.gugunName, a.dongName, a.dongCode, a.buildYear, a.jibun, a.lat, a.lng
-		from houseinfo as a
+		from house_info as a
 		inner join dongcode as b
 		on a.dongCode = b.dongCode
 	</sql>
@@ -52,10 +52,32 @@
 		select
 		a.houseinfo_id, a.aptName, a.dongCode, a.dongName, a.buildYear, a.jibun, a.lat, a.lng,
 		b.housedeal_id, b.dealAmount, b.dealYear, b.dealMonth, b.dealDay, b.area, b.floor, b.type, b.rentMoney
-		from houseinfo as a
+		from house_info as a
 		inner join housedeal as b
 		on a.houseinfo_id = b.houseinfo_id
 		where a.houseinfo_id = #{house_id}
+	</select>
+	
+	<!-- 동검색 -->
+	<select id="getHouseInfoSearchByDongName" parameterType="String" resultMap="com.ssafy.resultmaps.HouseResultMap">
+		<include refid="basicSelectHouseListSQL"/>
+		where a.dongName = #{dongName}
+	</select>
+	
+	<select id="getHouseInfoSearchByDongNameWithHouseDeals" parameterType="String" resultMap="com.ssafy.resultmaps.HouseInfoDealResultMap">
+		select
+		a.houseinfo_id, a.aptName, a.dongCode, a.dongName, a.buildYear, a.jibun, a.lat, a.lng, a.sidoName, a.gugunName, a.dongName,
+		b.housedeal_id, b.dealAmount, b.dealYear, b.dealMonth, b.dealDay, b.area, b.floor, b.type, b.rentMoney
+		from (
+			select 
+			a.houseinfo_id, a.aptName, b.sidoName, b.gugunName, a.dongName, a.dongCode, a.buildYear, a.jibun, a.lat, a.lng
+			from house_info as a
+			inner join dongcode as b
+			on a.dongCode = b.dongCode
+			where a.dongName like concat(#{dongName}, '%')
+        ) as a
+        inner join housedeal as b
+		on a.houseinfo_id = b.houseinfo_id
 	</select>
 	
 	<!-- house의 매물 목록 -->

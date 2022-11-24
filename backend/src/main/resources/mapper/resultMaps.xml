@@ -194,10 +194,7 @@
 	<resultMap type="InterestBoard" id="UserInterestBoardMap">
 		<id column="interest_sale_id" property="interestSaleId"/>
 		<result column="user_id" property="userId"/>
-<<<<<<< HEAD
-		<association property="board" resultMap="SaleBoardResultMap" />
-=======
 		<association property="saleBoard" resultMap="SaleBoardResultMap" />
->>>>>>> 7d0cdcfb0bf467d70ec7c7508fc9b7f2618c96ff
+
 	</resultMap>
 </mapper>
