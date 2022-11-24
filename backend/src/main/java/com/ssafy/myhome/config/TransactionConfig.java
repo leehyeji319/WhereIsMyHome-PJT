@@ -38,8 +38,12 @@ public class TransactionConfig {
 	        txMethods.put("delete*", txAttribute);
 	        txMethods.put("signup", txAttribute);
 	        txMethods.put("get*", txAttribute2);
-	        txMethods.put("login", txAttribute);
-	        txMethods.put("logIn", txAttribute);
+	        txMethods.put("log*", txAttribute);
+	        txMethods.put("logout", txAttribute);
+	        txMethods.put("save*", txAttribute);
+	        txMethods.put("getRefreshToken*", txAttribute);
+	        txMethods.put("deleRefreshToken*", txAttribute);
+	        txMethods.put("login", txAttribute2);
 	        txAttributeSource.setNameMap(txMethods);
 
 	        return new TransactionInterceptor(transactionManager, txAttributeSource);

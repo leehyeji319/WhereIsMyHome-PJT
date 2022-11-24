@@ -13,5 +13,7 @@ public interface HouseInfoDao {
 	List<HouseInfo> getHouses(Map<String, Object> conditions);
 	HouseInfo getHouse(int aptCode);
 	HouseInfo getHouseDeals(int aptCode);
+	HouseInfo getHousesSearchByDongName(String dongName);
+	HouseInfo getHousesSearchByDongNameWithHouseDeals(String dongName);
 	
 }

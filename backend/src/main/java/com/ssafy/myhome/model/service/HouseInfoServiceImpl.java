@@ -30,4 +30,14 @@ public class HouseInfoServiceImpl implements HouseInfoService {
 		return houseInfoDao.getHouseDeals(aptCode);
 	}
 
+	@Override
+	public HouseInfo getHousesSearchByDongName(String dongName) {
+		return houseInfoDao.getHousesSearchByDongName(dongName);
+	}
+
+	@Override
+	public HouseInfo getHousesSearchByDongNameWithHouseDeals(String dongName) {
+		return houseInfoDao.getHousesSearchByDongNameWithHouseDeals(dongName);
+	}
+	
 }

@@ -3,19 +3,14 @@
 
 
 <mapper namespace="com.ssafy.myhome.model.dao.InterestHouseDao">
-	
-	<sql id="basicSelectUserInterestHouseSQL">
-		select interest_house_id, user_id, houseinfo_id from user_interest_house_mapping
-	</sql>
-	
-	<select id="getUserInterestHouse" resultType="InterestHouse" parameterType="int">
-		<include refid="basicSelectUserInterestHouseSQL"/>
-		where interest_house_id = #{interest_house_id}
-	</select>
-	
+
 	<select id="getUserInterestHouses" resultMap="com.ssafy.resultmaps.UserInterestHouseMap" parameterType="String">
-		<include refid="basicSelectUserInterestHouseSQL"/>
-		where user_id = #{user_id}
+		select a.houseinfo_id, a.aptName, b.sidoName, b.gugunName, b.dongName, a.buildYear, a.jibun, a.lat, a.lng 
+		from house_info as a
+		left outer join dongcode as b
+        on a.dongCode = b.dongCode
+		where houseinfo_id in (select houseinfo_id from user_interest_house_mapping
+		where user_id = #{user_id});
 	</select>
 	
 	<insert id="registerUserInterestHouseMapping" parameterType="map">

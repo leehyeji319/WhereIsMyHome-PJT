@@ -1,4 +1,4 @@
-package com.ssafy.myhome.exception.advice;
+package com.ssafy.myhome.exception;
 
 public class IllegalUserException extends RuntimeException {
 	private static final long serialVersionUID = -2238030302650813813L;

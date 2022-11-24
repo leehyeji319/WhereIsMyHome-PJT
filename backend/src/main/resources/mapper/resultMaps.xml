@@ -66,7 +66,7 @@
 	
 	<!-- Notice -->
 	<resultMap type="Notice" id="NoticeResultMap" extends="BasePostFormResultMap">
-		<id column="noticeid" property="noticeId"/>
+		<id column="notice_id" property="noticeId"/>
 		<collection property="fileInfos" resultMap="FileInfoResultMap"/>
 	</resultMap>
 	
@@ -157,13 +157,9 @@
 
 
 	<!-- HouseInfo Mapping 전략 -->
-	<resultMap type="HouseInfo" id="HouseResultMap">
+	<resultMap type="HouseInfo" id="HouseResultMap" extends="DongCodeResultMap">
 		<id column="houseinfo_id" property="houseInfoId"/>
 		<result column="aptName" property="aptName"/>
-		<result column="sidoName" property="sidoName"/>
-		<result column="gugunName" property="gugunName"/>
-		<result column="dongName" property="dongName"/>
-		<result column="dongCode" property="dongCode"/>
 		<result column="buildYear" property="buildYear"/>
 		<result column="jibun" property="jibun"/>
 		<result column="lat" property="lat"/>
@@ -191,7 +187,7 @@
 	<resultMap type="InterestHouse" id="UserInterestHouseMap">
 		<id column="interest_house_id" property="interestHouseId"/>
 		<result column="user_id" property="userId"/>
-		<result column="houseinfo_id" property="houseInfoId"/>
+		<association property="houseInfo" resultMap="HouseResultMap"/>
 	</resultMap>
 	
 	<!-- Interest User Board Mapping 전략 -->
@@ -199,5 +195,6 @@
 		<id column="interest_sale_id" property="interestSaleId"/>
 		<result column="user_id" property="userId"/>
 		<association property="saleBoard" resultMap="SaleBoardResultMap" />
+
 	</resultMap>
 </mapper>

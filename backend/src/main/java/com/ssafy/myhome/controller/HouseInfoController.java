@@ -37,6 +37,27 @@ public class HouseInfoController {
 		
 	}
 	
+	@GetMapping("/search/dongName")
+	private ResponseEntity<HouseInfo> getHousesSearchByDongName(@RequestParam(required = true) String dongName) {
+		HouseInfo houseInfo = houseInfoService.getHousesSearchByDongName(dongName);
+		
+		if (houseInfo != null) {
+			return ResponseEntity.ok(houseInfo);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	@GetMapping("/search/dongName/deals")
+	private ResponseEntity<HouseInfo> getHousesSearchByDongNameWithHouseDeals(@RequestParam(required = true) String dongName) {
+		HouseInfo houseInfo = houseInfoService.getHousesSearchByDongNameWithHouseDeals(dongName);
+		if (houseInfo != null) {
+			return ResponseEntity.ok(houseInfo);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
 	@GetMapping("/{house_id}")
 	private ResponseEntity<HouseInfo> getHouse(@PathVariable("house_id") int houseinfoId) {
 		HouseInfo houseinfo = houseInfoService.getHouse(houseinfoId);

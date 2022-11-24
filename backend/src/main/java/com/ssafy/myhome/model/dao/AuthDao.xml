@@ -12,14 +12,14 @@
 		on a.user_id = b.user_id
 	</sql>
 	
-	<select id="userInfo" parameterType="string" resultType="UserInfo">
+	<!-- <select id="userInfo" parameterType="string" resultType="UserInfo">
 		select a.user_id, a.user_name, a.user_nickname, a.user_phone, a.user_role,
 		b.address, b.registration_number
 		from user_info as a
 		inner join company_info as b
 		on a.user_id = b.user_id
 		where a.user_id = #{userId}
-	</select>
+	</select> -->
 	
 	<insert id="signUpUser" parameterType="UserInfo">
 		insert into
@@ -48,5 +48,37 @@
 		select count(user_nickname) from user_info
 		where user_nickname = #{userNickname}
 	</select>
+	
+	
+	<!-- 효인쌤 -->
+	<select id="login" parameterType="UserInfo" resultMap="com.ssafy.resultmaps.UserResultMap">
+		select user_nickname, user_id, user_name
+		from user_info
+		where user_id = #{userId} and user_password = #{userPassword}
+	</select>
+	
+	<select id="userInfo" parameterType="string" resultMap="com.ssafy.resultmaps.UserResultMap">
+		select user_nickname, user_id, user_name, user_phone
+		from user_info
+		where user_id = #{userId}
+	</select>
+	
+	<select id="getRefreshToken" parameterType="string" resultType="string">
+		select token
+		from user_info
+		where user_id = #{userId}
+	</select>
+	
+	<update id="saveRefreshToken" parameterType="map">
+		update user_info
+		set token = #{token}
+		where user_id = #{userId}
+	</update>
+	
+	<update id="deleteRefreshToken" parameterType="map">
+		update user_info
+		set token = #{token, jdbcType=VARCHAR}
+		where user_id = #{userId}
+	</update>
 	
 </mapper>

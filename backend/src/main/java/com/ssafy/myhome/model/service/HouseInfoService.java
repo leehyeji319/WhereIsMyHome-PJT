@@ -11,5 +11,6 @@ public interface HouseInfoService {
 	List<HouseInfo> getHouses(Map<String,Object> conditions);
 	HouseInfo getHouse(int aptCode);
 	HouseInfo getHouseDeals(int aptCode);
-
+	HouseInfo getHousesSearchByDongName(String dongName);
+	HouseInfo getHousesSearchByDongNameWithHouseDeals(String dongNAme);
 }
