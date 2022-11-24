@@ -19,7 +19,7 @@
                 <v-card color="basil" flat>
                   <v-card-text>
                     <v-form v-model="valid" ref="form" lazy-validation>
-                      <v-row>
+                      <v-row no-gutters>
                         <v-col lg="10">
                           <v-row no-gutters>
                             <v-col class="d-flex mr-1">
@@ -55,12 +55,12 @@
                               ></v-select>
                             </v-col>
 
-                            <v-col class="d-flex" lg="1">
+                            <v-col class="d-flex" lg="2">
                               <v-tooltip top>
                                 <template v-slot:activator="{ on, attrs }">
                                   <v-btn
                                     :disabled="!valid"
-                                    color="success"
+                                    color="primary"
                                     @click="validate"
                                     small
                                     v-bind="attrs"
@@ -76,7 +76,7 @@
                           </v-row>
 
                           <v-row no-gutters>
-                            <v-col>
+                            <v-col class="mr-2">
                               <v-text-field
                                 dense
                                 v-model="message"
@@ -91,8 +91,8 @@
                         </v-col>
 
                         <v-col lg="2">
-                          <v-btn color="success" @click="validate" style="width: 100%; height: 100%">
-                            <v-icon dark class="mx-2"> mdi-magnify </v-icon>
+                          <v-btn min-width="0" color="success" style="width: 100%; height: 80%">
+                            <v-icon dark class=""> mdi-magnify </v-icon>
                           </v-btn>
                         </v-col>
                       </v-row>
