@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.myhome.model.dao.NoticeDao">
+    
+    <!-- CREATE -->
+    <insert id="registerNotice" parameterType="Notice">
+        INSERT INTO notice(title, content, hit) 
+        VALUES(#{title}, #{content}, 0)
+    </insert>
+    
+    <!-- UPDATE -->
+    <update id="updateNotice" parameterType="Notice">
+        UPDATE notice 
+        SET title = #{title}, content = #{content} 
+        WHERE notice_id = #{noticeId}
+    </update>
+    
+    <!-- DELETE -->
+    <delete id="deleteNotice" parameterType="int">
+        UPDATE notice 
+        SET is_deleted = 1
+        WHERE notice_id = #{noticeId}
+    </delete>
+    
+    <!-- READ -->
+    <sql id="selectQuery">
+        SELECT notice_id, title, content, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i') AS created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i') AS updated_at, hit 
+        FROM notice 
+        WHERE is_deleted = 0
+    </sql>
+    
+    <select id="getNotices" resultMap="com.ssafy.resultmaps.NoticeResultMap">
+        <include refid="selectQuery" />
+    </select>
+    
+    <select id="getNotice" parameterType="int" resultMap="com.ssafy.resultmaps.NoticeResultMap">
+        <include refid="selectQuery" />
+        WHERE notice_id = #{noticeId}
+    </select>
+    
+</mapper>

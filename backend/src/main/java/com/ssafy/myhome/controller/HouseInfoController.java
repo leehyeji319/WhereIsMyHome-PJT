@@ -37,7 +37,7 @@ public class HouseInfoController {
 		
 	}
 	
-	@GetMapping
+	@GetMapping("/search/dongName")
 	private ResponseEntity<HouseInfo> getHousesSearchByDongName(@RequestParam(required = true) String dongName) {
 		HouseInfo houseInfo = houseInfoService.getHousesSearchByDongName(dongName);
 		
@@ -48,7 +48,7 @@ public class HouseInfoController {
 		}
 	}
 	
-	@GetMapping
+	@GetMapping("/search/dongName/deals")
 	private ResponseEntity<HouseInfo> getHousesSearchByDongNameWithHouseDeals(@RequestParam(required = true) String dongName) {
 		HouseInfo houseInfo = houseInfoService.getHousesSearchByDongNameWithHouseDeals(dongName);
 		if (houseInfo != null) {

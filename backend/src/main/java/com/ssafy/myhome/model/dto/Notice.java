@@ -11,6 +11,6 @@ public class Notice extends BasePostForm {
 
 	private int noticeId;
 	
-	private List<FileInfo> fileInfo;
+	private List<FileInfo> fileInfos;
 	
 }
