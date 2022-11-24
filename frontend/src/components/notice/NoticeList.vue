@@ -8,7 +8,7 @@
         <v-col cols="12" md="3"></v-col>
         <v-col cols="12" md="3">
           <div class="text-center pa-3">
-            <v-btn rounded color="primary" dark @click="write"> 공지 등록하기 </v-btn>
+            <v-btn rounded color="yellow" @click="write"> 공지 등록하기 </v-btn>
           </div>
         </v-col>
       </v-row>

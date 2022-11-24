@@ -16,5 +16,8 @@ export default Object.freeze({
   SET_NOTICE: "setNotice",
   REGISTER_NOTICE: "registerNotice",
   UPDATE_NOTICE: "updateNotice",
-  DELETE_NOTICE: "deleteNotice"
+  DELETE_NOTICE: "deleteNotice",
+
+  //user
+  REGISTER_USER: "registerUser",
 })

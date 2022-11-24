@@ -41,7 +41,7 @@ const boardStore = {
     },
 
     [Constant.REGISTER_BOARD](context, payload) {
-      console.log(payload);
+      // console.log(payload);
       return restApi.post(`/api/boards`, payload)
       .then(() => console.log(`store action ${Constant.REGISTER_BOARD}`));
     },
