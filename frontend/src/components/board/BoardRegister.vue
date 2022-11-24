@@ -3,7 +3,7 @@
     <v-container class="my-5">
       <form>
         <v-text-field
-          v-model="제목"
+          v-model="board.title"
           :error-messages="titleErrors"
           :counter="10"
           label="Title"
@@ -13,7 +13,7 @@
         ></v-text-field>
 
         <v-text-field
-          v-model="buildingName"
+          v-model="board.buildingName"
           :error-messages="buildingNameErrors"
           :counter="10"
           label="건물명"
@@ -23,7 +23,7 @@
         ></v-text-field>
 
         <v-text-field
-          v-model="buildingAddress"
+          v-model="board.buildingAddress"
           :error-messages="buildingAddressErrors"
           :counter="10"
           label="건물 주소"
@@ -35,19 +35,19 @@
         <v-row>
           <v-col cols="12" md="4">
             <v-select
-              v-model="selectSaleType"
+              v-model="board.saleType"
               :items="saleTypes"
               :error-messages="selectSaleTypeErrors"
               label="거래 유형"
               required
-              @change="$v.selectSaleType.$touch()"
-              @blur="$v.selectSaleType.$touch()"
+              @change="$v.saleType.$touch()"
+              @blur="$v.saleType.$touch()"
             ></v-select>
           </v-col>
 
           <v-col cols="12" md="4">
             <v-text-field
-              v-model="salePrice"
+              v-model.number="board.salePrice"
               :error-messages="salePriceErrors"
               :counter="10"
               label="가격(만원)"
@@ -59,13 +59,13 @@
 
           <v-col cols="12" md="4">
             <v-select
-              v-model="selectBuildingType"
+              v-model="board.buildingType"
               :items="buildingTypes"
               :error-messages="selectBuildingTypeErrors"
               label="건물 유형"
               required
-              @change="$v.selectBuildingType.$touch()"
-              @blur="$v.selectBuildingType.$touch()"
+              @change="$v.buildingType.$touch()"
+              @blur="$v.buildingType.$touch()"
             ></v-select>
           </v-col>
         </v-row>
@@ -73,7 +73,7 @@
         <v-row>
           <v-col cols="12" md="3">
             <v-text-field
-              v-model="buildingSpace"
+              v-model.number="board.buildingSpace"
               :error-messages="buildingSpaceErrors"
               :counter="10"
               label="면적"
@@ -84,7 +84,7 @@
           </v-col>
 
           <v-col cols="12" md="3" class="align-center">
-            <v-radio-group v-model="buildingFloorType" row>
+            <v-radio-group v-model="board.buildingFloorType" row>
               <v-radio label="지상" value="1"></v-radio>
               <v-radio label="지하" value="2"></v-radio>
             </v-radio-group>
@@ -92,7 +92,7 @@
 
           <v-col cols="12" md="3">
             <v-text-field
-              v-model="buildingFloor"
+              v-model.number="board.buildingFloor"
               :error-messages="buildingFloorErrors"
               :counter="10"
               label="층수"
@@ -104,7 +104,7 @@
           <v-divider></v-divider>
           <v-col cols="12" md="3">
             <v-text-field
-              v-model="buldingRoomNum"
+              v-model.number="board.buldingRoomNum"
               :error-messages="buldingRoomNumErrors"
               :counter="10"
               label="방 개수"
@@ -119,7 +119,7 @@
         <v-textarea solo name="input-7-4" label="부가 설명란"></v-textarea>
         <!--파일 입력-->
         <v-file-input
-          v-model="files"
+          v-model="board.fileInfos"
           placeholder="Upload your documents"
           label="File input"
           multiple
@@ -141,7 +141,9 @@
 
 <script>
 import { validationMixin } from "vuelidate";
-import { required, maxLength, email } from "vuelidate/lib/validators";
+import { required, maxLength } from "vuelidate/lib/validators";
+import { mapActions } from "vuex";
+import Constnat from "@?Common/Constant.js";
 
 export default {
   name: "BoardRegister",
@@ -153,8 +155,8 @@ export default {
     buildingName: { required, maxLength: maxLength(20) },
     salePrice: { required, maxLength: maxLength(10) },
     buildingAddress: { required, maxLength: maxLength(30) },
-    selectSaleType: { required },
-    selectBuildingType: { required },
+    saleType: { required },
+    buildingType: { required },
     buildingSpace: { required, maxLength: maxLength(4) },
     checkbox: {
       checked(val) {
@@ -166,18 +168,23 @@ export default {
   },
 
   data: () => ({
-    title: "",
-    buildingName: "",
-    selectSaleType: null,
+    board: {
+      title: "",
+      buildingName: "",
+      saleType: "",
+      salePrice: null, //int형으로 바꿔줘야함
+      buildingType: "",
+      buildingAddress: "",
+      buildingSpace: "",
+      buildingFloorType: null,
+      buildingFloor: null,
+      fileInfos: [],
+      userInfo: {
+        userId: "khj",
+      },
+    },
     saleTypes: ["매매", "전세", "월세", "단기"],
-    salePrice: "", //int형으로 바꿔줘야함
-    selectBuildingType: null,
     buildingTypes: ["주택", "아파트", "빌라", "다세대주택", "원룸", "기타"],
-    buildingAddress: "",
-    buildingSpace: "",
-    buildingFloorType: null,
-    buildingFloor: null,
-    files: [],
   }),
 
   computed: {
@@ -187,10 +194,10 @@ export default {
       !this.$v.checkbox.checked && errors.push("You must agree to continue!");
       return errors;
     },
-    selectSaleTypeErrors() {
+    saleTypeErrors() {
       const errors = [];
-      if (!this.$v.selectSaleType.$dirty) return errors;
-      !this.$v.selectSaleType.required && errors.push("거래 유형을 선택해주세요!");
+      if (!this.$v.saleType.$dirty) return errors;
+      !this.$v.saleType.required && errors.push("거래 유형을 선택해주세요!");
       return errors;
     },
     titleErrors() {
@@ -215,10 +222,10 @@ export default {
       !this.$v.salePrice.required && errors.push("가격을 입력해주세요!");
       return errors;
     },
-    selectBuildingTypeErrors() {
+    buildingTypeErrors() {
       const errors = [];
-      if (!this.$v.selectBuildingType.$dirty) return errors;
-      !this.$v.selectBuildingType.required && errors.push("건물 유형을 선택해주세요!");
+      if (!this.$v.buildingType.$dirty) return errors;
+      !this.$v.buildingType.required && errors.push("건물 유형을 선택해주세요!");
       return errors;
     },
     buildingAddressErrors() {
@@ -252,16 +259,18 @@ export default {
   },
 
   methods: {
+    ...mapActions("boardStore", [Constant.RESIGER_BOARD]),
     submit() {
       this.$v.$touch();
+      const boardItem = this.board;
     },
     clear() {
       this.$v.$reset();
       this.title = "";
       this.buildingName = "";
       this.email = "";
-      this.selectSaleType = null;
-      this.selectBuildingType = null;
+      this.saleType = "";
+      this.buildingType = "";
       this.salePrice = "";
       this.buildingAddress = "";
       this.buildingSpace = "";
