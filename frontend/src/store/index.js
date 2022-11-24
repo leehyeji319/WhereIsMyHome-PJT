@@ -4,12 +4,14 @@ import createPersistedState from "vuex-persistedstate";
 
 // module import
 import boardStore from "@/store/modules/boardStore";
+import noticeStore from "@/store/modules/noticeStore";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
     boardStore,
+    noticeStore,
   },
   plugins: [
     createPersistedState({

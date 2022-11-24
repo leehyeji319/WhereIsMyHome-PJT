@@ -15,29 +15,21 @@
     </div>
     <v-card outlined>
       <v-list two-line>
-        <v-list-item-group v-model="selected" active-class="pink--text">
+        <v-list-item-group>
           <template v-for="(notice, index) in notices">
-            <v-list-item :key="notice.title">
-              <template v-slot:default="{ active }">
-                <v-list-item-content>
-                  <v-list-item-title v-text="notice.title"></v-list-item-title>
-
-                  <v-list-item-subtitle class="text--primary" v-text="notice.headline"></v-list-item-subtitle>
-
-                  <v-list-item-subtitle v-text="notice.subtitle"></v-list-item-subtitle>
-                </v-list-item-content>
-
-                <v-list-item-action>
-                  <v-list-item-action-text v-text="notice.action"></v-list-item-action-text>
-
-                  <v-icon v-if="!active" color="grey lighten-1"> mdi-star-outline </v-icon>
-
-                  <v-icon v-else color="yellow darken-3"> mdi-star </v-icon>
-                </v-list-item-action>
+            <v-list-item :key="notice.noticeId" @click="pickNotice(notice.noticeId)">
+              <!-- <v-list-item :key="notice.title" @click="pickNotice"> -->
+              <template>
+                <v-row>
+                  <!-- <router-link :to="{ name: 'noticeview', params: { noticeId: notice.noticeId } }"> </router-link> -->
+                  <v-col cols="12" md="2"> {{ index + 1 }} </v-col>
+                  <v-col cols="12" md="8"> {{ notice.title }} </v-col>
+                  <v-col cols="12" md="2"> 관리자 </v-col>
+                </v-row>
               </template>
             </v-list-item>
 
-            <v-divider v-if="index < items.length - 1" :key="index"></v-divider>
+            <v-divider v-if="index < notices.length - 1" :key="index"></v-divider>
           </template>
         </v-list-item-group>
       </v-list>
@@ -45,43 +37,31 @@
   </div>
 </template>
 <script>
+import Constant from "@/common/Constant.js";
+import { mapGetters, mapActions } from "vuex";
+
 export default {
+  name: "NoticeList",
   data() {
-    return {
-      selected: [2],
-      notices: [
-        {
-          action: "15 min",
-          headline: "Brunch this weekend?",
-          subtitle: `I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
-          title: "Ali Connors",
-        },
-        {
-          action: "2 hr",
-          headline: "Summer BBQ",
-          subtitle: `Wish I could come, but I'm out of town this weekend.`,
-          title: "me, Scrott, Jennifer",
-        },
-        {
-          action: "6 hr",
-          headline: "Oui oui",
-          subtitle: "Do you have Paris recommendations? Have you ever been?",
-          title: "Sandra Adams",
-        },
-        {
-          action: "12 hr",
-          headline: "Birthday gift",
-          subtitle: "Have any ideas about what we should get Heidi for her birthday?",
-          title: "Trevor Hansen",
-        },
-        {
-          action: "18hr",
-          headline: "Recipe to try",
-          subtitle: "We should eat this: Grate, Squash, Corn, and tomatillo Tacos.",
-          title: "Britta Holt",
-        },
-      ],
-    };
+    return {};
+  },
+  computed: {
+    ...mapGetters("noticeStore", ["notices"]),
+  },
+  methods: {
+    ...mapActions("noticeStore", [Constant.GET_NOTICES]),
+    pickNotice(payload) {
+      this.$router.push({
+        name: "noticeview",
+        params: { noticeId: payload },
+      });
+    },
+    write() {
+      this.$router.push({ name: "noticewrite" });
+    },
+  },
+  created() {
+    this[Constant.GET_NOTICES]();
   },
 };
 </script>

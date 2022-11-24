@@ -171,7 +171,7 @@
         </v-card-text>
         <v-divider></v-divider>
 
-        <v-btn width="100px" style="margin-left: 470px; margin-bottom: 20px" @click="moveBack">뒤로가기</v-btn>
+        <v-btn width="100px" style="margin-left: 30px; margin-bottom: 20px" @click="moveBack">뒤로가기</v-btn>
         <v-btn width="100px" style="margin-left: 30px; margin-bottom: 20px" @click="updateContent">수정</v-btn>
         <v-btn width="100px" style="margin-left: 30px; margin-bottom: 20px" @click="deleteContent">삭제</v-btn>
       </v-card>

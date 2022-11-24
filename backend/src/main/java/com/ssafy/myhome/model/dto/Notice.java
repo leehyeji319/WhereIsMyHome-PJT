@@ -10,7 +10,7 @@ import lombok.Setter;
 public class Notice extends BasePostForm {
 
 	private int noticeId;
-	
+	private String userId;
 	private List<FileInfo> fileInfos;
 	
 }

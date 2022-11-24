@@ -5,8 +5,8 @@
     
     <!-- CREATE -->
     <insert id="registerNotice" parameterType="Notice">
-        INSERT INTO notice(title, content, hit) 
-        VALUES(#{title}, #{content}, 0)
+        INSERT INTO notice(title, content, hit, user_id) 
+        VALUES(#{title}, #{content}, 0, "admin")
     </insert>
     
     <!-- UPDATE -->
@@ -26,7 +26,7 @@
     <!-- READ -->
     <sql id="selectQuery">
         SELECT notice_id, title, content, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i') AS created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i') AS updated_at, hit 
-        FROM notice 
+        FROM notice
         WHERE is_deleted = 0
     </sql>
     
@@ -36,7 +36,7 @@
     
     <select id="getNotice" parameterType="int" resultMap="com.ssafy.resultmaps.NoticeResultMap">
         <include refid="selectQuery" />
-        WHERE notice_id = #{noticeId}
+        and notice_id = #{noticeId}
     </select>
     
 </mapper>

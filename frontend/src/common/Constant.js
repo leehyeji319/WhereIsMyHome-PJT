@@ -8,4 +8,13 @@ export default Object.freeze({
   REGISTER_BOARD: "registerBoard",
   UPDATE_BOARD : "updateBoard",
   DELETE_BOARD: "deleteBoard",
+
+  //Notice
+  GET_NOTICES: "getNotices",
+  SET_NOTICES: "setNotices",
+  GET_NOTICE: "getNotice",
+  SET_NOTICE: "setNotice",
+  REGISTER_NOTICE: "registerNotice",
+  UPDATE_NOTICE: "updateNotice",
+  DELETE_NOTICE: "deleteNotice"
 })

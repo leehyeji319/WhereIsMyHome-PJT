@@ -105,12 +105,12 @@ export default {
   },
   methods: {
     ...mapActions("boardStore", [Constant.GET_BOARDS]),
-    pickBoard(boardId) {
+    pickBoard(payload) {
       // this.$emit("select-board", boardId);
       // this.$router.push(`/board/detail/${boardId}`);
       this.$router.push({
         name: "boardview",
-        params: { boardId: board.boardId },
+        params: { boardId: payload },
       });
     },
     write() {

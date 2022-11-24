@@ -235,9 +235,9 @@ export default {
       return errors;
     },
   },
-  computed: {
-    ...mapGetters("boardStore", ["board"]),
-  },
+  // computed: {
+  //   ...mapGetters("boardStore", ["board"]),
+  // },
 
   methods: {
     ...mapActions("boardStore", [Constant.UPDATE_BOARD, Constant.GET_BOARD]),

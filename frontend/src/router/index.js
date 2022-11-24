@@ -80,21 +80,21 @@ const routes = [
         name: "noticelist",
         component: () => import("@/components/notice/NoticeList"),
       },
-      // {
-      //   path: "write",
-      //   name: "noticewrite",
-      //   component: () => import("@/components/notice/NoticeWrite"),
-      // },
-      // {
-      //   path: "view/:noticeId",
-      //   name: "noticeview",
-      //   component: () => import("@/components/notice/NoticeView"),
-      // },
-      // {
-      //   path: "modify",
-      //   name: "noticemodify",
-      //   component: () => import("@/components/notice/NoticeModify"), //아직 안함
-      // },
+      {
+        path: "write",
+        name: "noticewrite",
+        component: () => import("@/components/notice/NoticeWrite"),
+      },
+      {
+        path: "view/:noticeId",
+        name: "noticeview",
+        component: () => import("@/components/notice/NoticeView"),
+      },
+      {
+        path: "modify",
+        name: "noticemodify",
+        component: () => import("@/components/notice/NoticeModify"), //아직 안함
+      },
       // {
       //   path: "delete/:noticeId",
       //   name: "noticedelete",
