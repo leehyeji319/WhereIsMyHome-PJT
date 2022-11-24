@@ -12,6 +12,7 @@ export default Object.freeze({
   //HouseInfo
   GET_HOUSEINFOS: "getHouseInfos",
   SET_HOUSEINFOS: "setHouseInfos",
+  CLEAR_HOUSEINFOS: "clearHouseInfos",
   GET_HOUSEINFO: "getHouseInfo",
   SET_HOUSEINFO: "setHouseInfo",
   

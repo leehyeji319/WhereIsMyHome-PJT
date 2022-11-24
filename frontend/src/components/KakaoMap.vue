@@ -1,18 +1,21 @@
 <template>
   <div style="height: 100%">
     <div id="map"></div>
-    <div class="button-group">
+    <!-- <div class="button-group">
       <button @click="changeSize(0)">Hide</button>
       <button @click="changeSize()">show</button>
       <button @click="displayMarker(markerPositions1)">marker set 1</button>
       <button @click="displayMarker(markerPositions2)">marker set 2</button>
       <button @click="displayMarker([])">marker set 3 (empty)</button>
       <button @click="displayInfoWindow">infowindow</button>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
+  import Constant from "@/common/Constant";
+  import { mapGetters } from "vuex";
+
   export default {
     name: "KakaoMap",
     data() {
@@ -59,6 +62,47 @@
         //지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
         this.map = new kakao.maps.Map(container, options);
       },
+
+      makeMarkers(houses) {
+        // 마커를 표시할 위치와 title 객체 배열입니다
+        var positions = [];
+        for (let i = 0; i < houses.length; i++) {
+          let house = houses[i];
+
+          positions.push({
+            title: house.aptName,
+            latlng: new kakao.maps.LatLng(Number(house.lat), Number(house.lng)),
+          });
+        }
+
+        let imageSrc = "./marker_image.png";
+
+        for (let i = 0; i < positions.length; i++) {
+          // 마커 이미지의 이미지 크기 입니다
+          let imageSize = new kakao.maps.Size(30, 35);
+
+          // 마커 이미지를 생성합니다
+          let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+          // 마커를 생성합니다
+          let marker = new kakao.maps.Marker({
+            map: this.map, // 마커를 표시할 지도
+            position: positions[i].latlng, // 마커를 표시할 위치
+            title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+            image: markerImage, // 마커 이미지
+          });
+        }
+      },
+
+      panTo(lat, lng) {
+        // 이동할 위도 경도 위치를 생성합니다
+        var moveLatLon = new kakao.maps.LatLng(lat, lng);
+
+        // 지도 중심을 부드럽게 이동시킵니다
+        // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+        this.map.panTo(moveLatLon);
+      },
+
       changeSize() {
         const container = document.getElementById("map");
         container.style.height = `100%`;
@@ -104,6 +148,17 @@
         });
 
         this.map.setCenter(iwPosition);
+      },
+    },
+
+    computed: {
+      ...mapGetters("houseStore", ["houseInfos"]),
+    },
+
+    watch: {
+      houseInfos() {
+        this.panTo(Number(this.houseInfos[0].lat), Number(this.houseInfos[0].lng));
+        this.makeMarkers(this.houseInfos);
       },
     },
   };

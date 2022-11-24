@@ -6,14 +6,14 @@
 	
 	<sql id="basicSelectHouseSQL">
 		select houseinfo_id, aptName, dongCode, dongName, buildYear, jibun, lat, lng
-		from houseinfo
+		from house_info
 	</sql>
 	
 	<!-- basic get House List -->
 	<sql id="basicSelectHouseListSQL">
 		select 
 		a.houseinfo_id, a.aptName, b.sidoName, b.gugunName, a.dongName, a.dongCode, a.buildYear, a.jibun, a.lat, a.lng
-		from houseinfo as a
+		from house_info as a
 		inner join dongcode as b
 		on a.dongCode = b.dongCode
 	</sql>

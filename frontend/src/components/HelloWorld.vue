@@ -20,7 +20,7 @@
                   <!-- 탭1 -->
                   <v-card-text v-if="index === 0">
                     <house-search-box></house-search-box>
-                    <house-infos @onShowDetail="showDetail"></house-infos>
+                    <house-infos-vue @onShowDetail="showDetail"></house-infos-vue>
                   </v-card-text>
 
                   <!-- 탭2 -->
@@ -55,7 +55,7 @@
 <script>
   import KakaoMap from "./KakaoMap.vue";
   import HouseSearchBox from "./HouseSearchBox.vue";
-  import HouseInfos from "./HouseInfos.vue";
+  import HouseInfosVue from "./HouseInfosVue.vue";
   // import { validationMixin } from "vuelidate";
   // import { required, maxLength, email } from "vuelidate/lib/validators";
 
@@ -65,7 +65,7 @@
     components: {
       KakaoMap,
       HouseSearchBox,
-      HouseInfos,
+      HouseInfosVue,
     },
 
     // mixins: [validationMixin],

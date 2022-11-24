@@ -10,7 +10,7 @@ const houseStore = {
 
   getters: {
     houseInfos(state) {
-      return state.houseInfos
+      return state.houseInfos;
     },
     houseInfo(state){
       return state.houseInfo;
@@ -27,31 +27,45 @@ const houseStore = {
   },
 
   actions: { //service 느낌
-    [Constant.GET_HOUSEINFOS](context) {
-      return restApi.get(`/api/houses`).then(({ data }) => {
+    [Constant.GET_HOUSEINFOS](context, {sidoCode, gugunCode, dongCode}) {
+      return restApi.get(`/api/houses`, {
+        params: {
+          sidoCode,
+          gugunCode,
+          dongCode
+        }
+      }).then(({ data }) => {
         context.commit(Constant.SET_HOUSEINFOS, data);
       });
     },
 
     [Constant.GET_HOUSEINFO](context, payload) {
-      return restApi.get(`/api/boards/${payload}`).then(({ data }) => {
-        context.commit(Constant.SET_BOARD, data);
+      
+    },
+
+    [Constant.SET_HOUSEINFO](context, payload) {
+      return restApi.get(`/api/houses/${payload}`).then(({ data }) => {
+        context.commit(Constant.SET_HOUSEINFO, data);
         // console.log(data);
       })
     },
 
-    [Constant.REGISTER_BOARD](context, payload) {
-      return restApi.post(`/api/boards`, payload)
-      .then(() => console.log(`store action ${Constant.REGISTER_BOARD}`));
-    },
-    [Constant.UPDATE_BOARD](context, board) {
-      return restApi.post(`/api/boards/${board.boardId}`, board)
-      .then(() => console.log(`store action ${Constant.UPDATE_BOARD}`));
-    },
-    [Constant.DELETE_BOARD](context, board) {
-      return restApi.delete(`/api/boards/${board.boardId}`, board)
-      .then(() => console.log(`store action ${Constant.DELETE_BOARD}`));
+    [Constant.CLEAR_HOUSEINFOS](context) {
+      context.commit(Constant.SET_HOUSEINFOS, null);
     }
+
+    // [Constant.REGISTER_BOARD](context, payload) {
+    //   return restApi.post(`/api/boards`, payload)
+    //   .then(() => console.log(`store action ${Constant.REGISTER_BOARD}`));
+    // },
+    // [Constant.UPDATE_BOARD](context, board) {
+    //   return restApi.post(`/api/boards/${board.boardId}`, board)
+    //   .then(() => console.log(`store action ${Constant.UPDATE_BOARD}`));
+    // },
+    // [Constant.DELETE_BOARD](context, board) {
+    //   return restApi.delete(`/api/boards/${board.boardId}`, board)
+    //   .then(() => console.log(`store action ${Constant.DELETE_BOARD}`));
+    // }
   }
 }
 
