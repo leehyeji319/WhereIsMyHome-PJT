@@ -1,11 +1,17 @@
 <template>
   <v-app>
-    <home-view> </home-view>
+    <the-header-nav-bar></the-header-nav-bar>
+
+    <v-main>
+      <v-container class="px-16">
+        <router-view></router-view>
+      </v-container>
+    </v-main>
   </v-app>
 </template>
 
 <script>
-import HomeView from "@/views/HomeView";
+import TheHeaderNavBar from "@/components/TheHeaderNavBar";
 export default {
   name: "App",
 
@@ -13,7 +19,7 @@ export default {
     //
   }),
   components: {
-    HomeView,
+    TheHeaderNavBar,
   },
 };
 </script>

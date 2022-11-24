@@ -41,11 +41,12 @@ const boardStore = {
     },
 
     [Constant.REGISTER_BOARD](context, payload) {
+      console.log(payload);
       return restApi.post(`/api/boards`, payload)
       .then(() => console.log(`store action ${Constant.REGISTER_BOARD}`));
     },
     [Constant.UPDATE_BOARD](context, board) {
-      return restApi.post(`/api/boards/${board.boardId}`, board)
+      return restApi.put(`/api/boards/${board.boardId}`, board)
       .then(() => console.log(`store action ${Constant.UPDATE_BOARD}`));
     },
     [Constant.DELETE_BOARD](context, board) {
