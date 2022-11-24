@@ -15,6 +15,7 @@
         <v-textarea height="330" v-model="notice.content" solo name="input-7-4" label="내용 입력"></v-textarea>
 
         <!--파일 입력-->
+
         <v-file-input
           v-model="notice.fileInfos"
           placeholder="Upload your documents"

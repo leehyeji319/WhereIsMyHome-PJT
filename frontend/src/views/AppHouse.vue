@@ -1,5 +1,7 @@
 <template>
-  <div>실거래가 조회 게시팔</div>
+  <div>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>

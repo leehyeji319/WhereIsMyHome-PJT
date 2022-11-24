@@ -60,7 +60,13 @@ const routes = [
   {
     path: "/house",
     name: "house",
-    component: AppHouse,
+    component: () => import("@/components/houses/HouseView.vue"),
+    // children: [
+    //   {
+    //     path: "list",
+    //     name: "boardlist",
+    //     component: () => import("@/components/board/BoardList"),
+    //   },
   },
   {
     path: "/board",
