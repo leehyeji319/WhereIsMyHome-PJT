@@ -15,102 +15,22 @@
             </v-tabs>
 
             <v-tabs-items v-model="tab">
-              <v-tab-item v-for="selectedTab in tabNames" :key="selectedTab">
+              <v-tab-item v-for="(selectedTab, index) in tabNames" :key="selectedTab">
                 <v-card color="basil" flat>
-                  <v-card-text>
-                    <v-form v-model="valid" ref="form" lazy-validation>
-                      <v-row no-gutters>
-                        <v-col lg="10">
-                          <v-row no-gutters>
-                            <v-col class="d-flex mr-1">
-                              <v-select
-                                v-model="selectedSido"
-                                required
-                                :items="sidos"
-                                label="시/도"
-                                outlined
-                                dense
-                              ></v-select>
-                            </v-col>
-
-                            <v-col class="d-flex mr-1">
-                              <v-select
-                                v-model="selectedGugun"
-                                required
-                                :items="guguns"
-                                label="구/군"
-                                outlined
-                                dense
-                              ></v-select>
-                            </v-col>
-
-                            <v-col class="d-flex mr-1">
-                              <v-select
-                                v-model="selectedDong"
-                                required
-                                :items="dongs"
-                                label="동"
-                                outlined
-                                dense
-                              ></v-select>
-                            </v-col>
-
-                            <v-col class="d-flex" lg="2">
-                              <v-tooltip top>
-                                <template v-slot:activator="{ on, attrs }">
-                                  <v-btn
-                                    :disabled="!valid"
-                                    color="primary"
-                                    @click="validate"
-                                    small
-                                    v-bind="attrs"
-                                    v-on="on"
-                                    fab
-                                  >
-                                    <v-icon dark class="mx-2"> mdi-plus </v-icon>
-                                  </v-btn>
-                                </template>
-                                <span>관심 지역 추가</span>
-                              </v-tooltip>
-                            </v-col>
-                          </v-row>
-
-                          <v-row no-gutters>
-                            <v-col class="mr-2">
-                              <v-text-field
-                                dense
-                                v-model="message"
-                                outlined
-                                clearable
-                                label="건물명으로 검색"
-                                type="text"
-                              >
-                              </v-text-field>
-                            </v-col>
-                          </v-row>
-                        </v-col>
-
-                        <v-col lg="2">
-                          <v-btn min-width="0" color="success" style="width: 100%; height: 80%">
-                            <v-icon dark class=""> mdi-magnify </v-icon>
-                          </v-btn>
-                        </v-col>
-                      </v-row>
-                    </v-form>
+                  <!-- 탭1 -->
+                  <v-card-text v-if="index === 0">
+                    <house-search-box></house-search-box>
+                    <house-infos @onShowDetail="showDetail"></house-infos>
                   </v-card-text>
+
+                  <!-- 탭2 -->
+                  <v-card-text v-else-if="index === 1"> </v-card-text>
+
+                  <!-- 탭3 -->
+                  <v-card-text v-else-if="index === 2"> </v-card-text>
                 </v-card>
               </v-tab-item>
             </v-tabs-items>
-          </v-card>
-
-          <v-card class="pa-2" outlined tile>
-            <v-list>
-              <v-list-item-group v-model="selectedItem">
-                <v-list-item v-for="n in 5" :key="n" link @click="showDetail">
-                  <v-list-item-title v-text="'Item ' + n"> </v-list-item-title>
-                </v-list-item>
-              </v-list-item-group>
-            </v-list>
           </v-card>
         </v-col>
 
@@ -134,6 +54,8 @@
 
 <script>
   import KakaoMap from "./KakaoMap.vue";
+  import HouseSearchBox from "./HouseSearchBox.vue";
+  import HouseInfos from "./HouseInfos.vue";
   // import { validationMixin } from "vuelidate";
   // import { required, maxLength, email } from "vuelidate/lib/validators";
 
@@ -142,6 +64,8 @@
 
     components: {
       KakaoMap,
+      HouseSearchBox,
+      HouseInfos,
     },
 
     // mixins: [validationMixin],
@@ -172,16 +96,6 @@
     },
 
     methods: {
-      all() {
-        this.panel = [...Array(this.items).keys()].map((k, i) => i);
-      },
-      // Reset the panel
-      none() {
-        this.panel = [];
-      },
-      showDetail() {
-        this.clicked = true;
-      },
       validate() {
         this.$refs.form[0].validate();
       },
@@ -198,6 +112,11 @@
           this.message = `You've clicked me!`;
         }, 2000);
       },
+
+      showDetail(selected) {
+        this.selectedItem = selected;
+        this.clicked = true;
+      },
     },
 
     watch: {
@@ -209,15 +128,6 @@
         }
       },
     },
-
-    // computed: {
-    //   selectErrors() {
-    //     const errors = [];
-    //     if (!this.$v.select.$dirty) return errors;
-    //     !this.$v.select.required && errors.push("Item is required");
-    //     return errors;
-    //   },
-    // },
   };
 </script>
 

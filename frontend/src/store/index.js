@@ -3,13 +3,13 @@ import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 
 // module import
-import boardStore from "@/store/modules/boardStore";
+import houseStore from "@/store/modules/houseStore";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    boardStore,
+    houseStore,
   },
   plugins: [
     createPersistedState({
