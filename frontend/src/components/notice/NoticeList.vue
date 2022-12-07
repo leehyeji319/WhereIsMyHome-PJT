@@ -7,9 +7,14 @@
         <v-col cols="12" md="3"></v-col>
         <v-col cols="12" md="3"></v-col>
         <v-col cols="12" md="3">
-          <div class="text-center pa-3">
-            <v-btn rounded color="yellow" @click="write"> 공지 등록하기 </v-btn>
-          </div>
+          <template v-if="userInfo.userRole == 'ADMIN'">
+            <div class="text-center pa-3">
+              <v-btn rounded color="yellow" @click="write"> 공지 등록하기 </v-btn>
+            </div>
+          </template>
+          <!-- <template v-else>
+            <div></div>
+          </template> -->
         </v-col>
       </v-row>
     </div>
@@ -38,7 +43,7 @@
 </template>
 <script>
 import Constant from "@/common/Constant.js";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 
 export default {
   name: "NoticeList",
@@ -47,6 +52,7 @@ export default {
   },
   computed: {
     ...mapGetters("noticeStore", ["notices"]),
+    ...mapState("memberStore", ["userInfo"]),
   },
   methods: {
     ...mapActions("noticeStore", [Constant.GET_NOTICES]),

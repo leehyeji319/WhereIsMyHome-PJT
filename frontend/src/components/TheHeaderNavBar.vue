@@ -18,12 +18,15 @@
       <template v-if="userInfo">
         <v-toolbar-items class="hidden-xs-only">
           <!-- <v-avatar v-text="userInfo.userId.charAt(0).toUpperCase()"></v-avatar> -->
-          {{ userInfo.userNickname }}({{ userInfo.userId }})님 환영합니다.
+          <v-btn color="#000000" plain raised :to="{ name: 'mypage' }"
+            >{{ userInfo.userNickname }}({{ userInfo.userId }})님 환영합니다.</v-btn
+          >
+          <!-- {{ userInfo.userNickname }}({{ userInfo.userId }})님 환영합니다. -->
         </v-toolbar-items>
-        <v-toolbar-items class="hidden-xs-only">
-          <v-btn color="#000000" plain raised :to="{ name: 'mypage' }">내정보</v-btn>
-          <!-- <router-link :to="{ name: 'mypage' }" class="link align-self-center">내정보보기</router-link> -->
-        </v-toolbar-items>
+        <!-- <v-toolbar-items class="hidden-xs-only"> -->
+        <!-- <v-btn color="#000000" plain raised :to="{ name: 'mypage' }">내정보</v-btn> -->
+        <!-- <router-link :to="{ name: 'mypage' }" class="link align-self-center">내정보보기</router-link> -->
+        <!-- </v-toolbar-items> -->
         <v-toolbar-items class="hidden-xs-only">
           <v-btn color="#000000" plain raised @click.prevent="onClickLogout">로그아웃</v-btn>
         </v-toolbar-items>

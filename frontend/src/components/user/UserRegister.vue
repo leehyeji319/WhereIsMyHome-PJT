@@ -18,9 +18,9 @@
           </v-flex>
           <v-flex>
             <v-text-field
-              name="password"
+              name="userPassword"
               label="Password"
-              id="password"
+              id="userPassword"
               type="password"
               required
               v-model="user.userPassword"
@@ -33,6 +33,7 @@
               id="confirmPassword"
               type="password"
               required
+              v-model="user.userPassword"
             ></v-text-field>
           </v-flex> -->
           <v-flex>
@@ -97,6 +98,7 @@ export default {
         userName: "",
         userPhone: "",
         userNickname: "",
+        userRole: "USER",
         companyInfo: {
           address: "",
           registrationNumber: "",
@@ -107,10 +109,9 @@ export default {
   methods: {
     ...mapActions("memberStore", [Constant.REGISTER_USER]),
     submit() {
-      // this.$v.$touch();
-      // console.log(this[Constant.REGISTER_BOARD]);
       if (this.user) this[Constant.REGISTER_USER](this.user);
-      this.move();
+      // console.log(this.user);
+      this.moveList();
     },
     moveList() {
       this.$router.push({ name: "main" });

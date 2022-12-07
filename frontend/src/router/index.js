@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import AppHouse from "@/views/AppHouse";
+// import AppHouse from "@/views/AppHouse";
 // import AppBoard from "@/views/AppBoard";
 import AppMain from "@/views/AppMain";
 
@@ -57,17 +57,18 @@ const routes = [
       },
     ],
   },
-  {
-    path: "/house",
-    name: "house",
-    component: () => import("@/components/houses/HouseView.vue"),
-    // children: [
-    //   {
-    //     path: "list",
-    //     name: "boardlist",
-    //     component: () => import("@/components/board/BoardList"),
-    //   },
-  },
+  // {
+  //   path: "/house",
+  //   name: "house",
+  //   component: () => import("@/components/houses/HouseView.vue"),
+  //   children: [
+  //     {
+  //       path: "map",
+  //       name: "map",
+  //       component: () => import("@/views/")
+  //     }
+  //   ]
+  // },
   {
     path: "/board",
     name: "board",

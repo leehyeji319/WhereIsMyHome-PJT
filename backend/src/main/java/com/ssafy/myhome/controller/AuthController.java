@@ -52,7 +52,7 @@ public class AuthController {
 		}
 	}
 	
-	@PostMapping("/logIn")
+	/**@PostMapping("/logIn")
 	public ResponseEntity<?> login(HttpSession session, @RequestBody UserInfo userInfo) {
 		UserInfo loginUser = authService.logIn(userInfo);
 		
@@ -68,7 +68,7 @@ public class AuthController {
 	public ResponseEntity<?> logout(HttpSession session) {
 		session.invalidate();
 		return ResponseEntity.ok().build();
-	}
+	} **/
 	
 	//==효인쌤 ==//
 	@PostMapping("/login")

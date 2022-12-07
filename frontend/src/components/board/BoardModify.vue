@@ -235,15 +235,12 @@ export default {
       return errors;
     },
   },
-  // computed: {
-  //   ...mapGetters("boardStore", ["board"]),
-  // },
 
   methods: {
     ...mapActions("boardStore", [Constant.UPDATE_BOARD, Constant.GET_BOARD]),
 
     update() {
-      this.$v.$touch();
+      // this.$v.$touch();
       // const boardItem = this.board;
       // if (boardItem) this.updateBoard(boardItem);
       if (this.board) this[Constant.UPDATE_BOARD](this.board);
@@ -260,17 +257,17 @@ export default {
     },
 
     clear() {
-      this.$v.$reset();
-      this.board.title = "";
-      this.board.buildingName = "";
-      this.board.saleType = null;
-      this.board.buildingType = null;
-      this.board.salePrice = "";
-      this.board.buildingAddress = "";
-      this.board.buildingSpace = "";
-      this.board.buildingFloor = null;
-      this.board.buldingRoomNum = null;
-      this.board.content = null;
+      // this.$v.$reset();
+      // this.board.title = "";
+      // this.board.buildingName = "";
+      // this.board.saleType = null;
+      // this.board.buildingType = null;
+      // this.board.salePrice = "";
+      // this.board.buildingAddress = "";
+      // this.board.buildingSpace = "";
+      // this.board.buildingFloor = null;
+      // this.board.buldingRoomNum = null;
+      // this.board.content = null;
     },
   },
   created() {

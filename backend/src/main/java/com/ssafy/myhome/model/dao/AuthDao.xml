@@ -12,15 +12,6 @@
 		on a.user_id = b.user_id
 	</sql>
 	
-	<!-- <select id="userInfo" parameterType="string" resultType="UserInfo">
-		select a.user_id, a.user_name, a.user_nickname, a.user_phone, a.user_role,
-		b.address, b.registration_number
-		from user_info as a
-		inner join company_info as b
-		on a.user_id = b.user_id
-		where a.user_id = #{userId}
-	</select> -->
-	
 	<insert id="signUpUser" parameterType="UserInfo">
 		insert into
 		user_info(user_id, user_password, user_name, user_phone, user_nickname, user_role)
@@ -58,7 +49,7 @@
 	</select>
 	
 	<select id="userInfo" parameterType="string" resultMap="com.ssafy.resultmaps.UserResultMap">
-		select user_nickname, user_id, user_name, user_phone
+		select user_nickname, user_id, user_name, user_phone, user_role
 		from user_info
 		where user_id = #{userId}
 	</select>

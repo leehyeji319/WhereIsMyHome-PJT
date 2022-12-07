@@ -41,7 +41,50 @@ public class AuthServiceImpl implements AuthService {
 		return authDao.logIn(userInfo);
 	}
 	
+	//==효인쌤==//
+//	@Autowired
+//	private SqlSession sqlSession;
+
+	@Override
+	public UserInfo login(UserInfo userInfo) throws Exception {
+		if (userInfo.getUserId() == null || userInfo.getUserPassword() == null) {
+			return null; 
+			}
+//		return sqlSession.getMapper(AuthDao.class).login(userInfo);
+		return authDao.login(userInfo);
+	}
+
+	@Override
+	public UserInfo userInfo(String userId) throws Exception {
+//		return sqlSession.getMapper(AuthDao.class).userInfo(userId);
+		return authDao.userInfo(userId);
+	}
+
+	@Override
+	public void saveRefreshToken(String userId, String refreshToken) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("token", refreshToken);
+//		sqlSession.getMapper(AuthDao.class).saveRefreshToken(map);
+		authDao.saveRefreshToken(map);
+	}
+
+	@Override
+	public Object getRefreshToken(String userId) throws Exception {
+//		return sqlSession.getMapper(AuthDao.class).getRefreshToken(userId);
+		return authDao.getRefreshToken(userId);
+	}
+
+	@Override
+	public void deleteRefreshToken(String userId) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userId", userId);
+		map.put("token", null);
+//		sqlSession.getMapper(AuthDao.class).deleteRefreshToken(map);
+		authDao.deleteRefreshToken(map);
+	}
 	
+	//===check validate ===//
 	@Override
 	public void validateDuplicateId(String userId) {
 		if (authDao.validateDuplicateId(userId) == 1) {
@@ -57,41 +100,5 @@ public class AuthServiceImpl implements AuthService {
 	}
 	
 	
-	//==효인쌤==//
-	@Autowired
-	private SqlSession sqlSession;
-
-	@Override
-	public UserInfo login(UserInfo userInfo) throws Exception {
-		if (userInfo.getUserId() == null || userInfo.getUserPassword() == null)
-			return null;
-		return sqlSession.getMapper(AuthDao.class).login(userInfo);
-	}
-
-	@Override
-	public UserInfo userInfo(String userId) throws Exception {
-		return sqlSession.getMapper(AuthDao.class).userInfo(userId);
-	}
-
-	@Override
-	public void saveRefreshToken(String userId, String refreshToken) throws Exception {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("userId", userId);
-		map.put("token", refreshToken);
-		sqlSession.getMapper(AuthDao.class).saveRefreshToken(map);
-	}
-
-	@Override
-	public Object getRefreshToken(String userId) throws Exception {
-		return sqlSession.getMapper(AuthDao.class).getRefreshToken(userId);
-	}
-
-	@Override
-	public void deleteRefreshToken(String userId) throws Exception {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("userId", userId);
-		map.put("token", null);
-		sqlSession.getMapper(AuthDao.class).deleteRefreshToken(map);
-	}
 	
 }

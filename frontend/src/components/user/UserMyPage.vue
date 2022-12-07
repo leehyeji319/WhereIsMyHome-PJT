@@ -1,50 +1,44 @@
 <template>
-  <v-card max-width="375" class="mx-auto">
-    <v-img
-      src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
-      height="300px"
-      sizes="80"
-      dark
-    >
-      <v-row class="fill-height">
-        <!-- <v-card-title>
-          <v-btn dark icon>
-            <v-icon>mdi-chevron-left</v-icon>
-          </v-btn>
+  <div>
+    <v-card max-width="1000" class="mt-8">
+      <v-row>
+        <v-col cols="12" md="4">
+          <v-img
+            class="ml-5"
+            contain
+            src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
+            height="300px"
+            sizes="80"
+          ></v-img>
+        </v-col>
 
-          <v-spacer></v-spacer>
-
-          <v-btn dark icon class="mr-4">
-            <v-icon>mdi-pencil</v-icon>
-          </v-btn>
-
-          <v-btn dark icon>
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </v-card-title> -->
-
-        <v-spacer></v-spacer>
+        <v-col cols="12" md="8">
+          <v-list class="mt-8 mr-8 py-8" two-line color="yellow lighten-5">
+            <v-list-item>
+              <v-list-item-title cols="12" md="5">이름 </v-list-item-title>
+              <v-col cols="12" md="7">{{ userInfo.userName }}</v-col>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-title cols="12" md="5">닉네임 </v-list-item-title>
+              <v-col cols="12" md="7">{{ userInfo.userNickname }}</v-col>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-title cols="12" md="5">연락처 </v-list-item-title>
+              <v-col cols="12" md="7">{{ userInfo.userPhone }}</v-col>
+            </v-list-item>
+          </v-list>
+        </v-col>
       </v-row>
-    </v-img>
-
-    <v-list two-line>
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title>이름: {{ userInfo.userName }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title>닉네임: {{ userInfo.userNickname }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title>연락처: {{ userInfo.userPhone }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-    </v-list>
-  </v-card>
+      <v-row>
+        <v-col cols="12" md="4">
+          <v-btn class="mb-3" rounded color="yellow lighten-4" @click="modify"> 수정 </v-btn>
+        </v-col>
+        <v-col cols="12" md="8">
+          <v-btn class="mb-3" rounded color="yellow lighten-4" @click="modify"> 수정 </v-btn>
+        </v-col>
+      </v-row>
+    </v-card>
+  </div>
 </template>
 
 <script>
